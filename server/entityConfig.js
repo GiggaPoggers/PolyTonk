@@ -240,7 +240,7 @@ exports.entityTypes = [
   },
   {
     name: "Tri-Angle",
-    bodyShape: 0,
+    bodyShape: 5,
     fieldFactor: 1,
     spdFactor: 1.25,
     barrels: [

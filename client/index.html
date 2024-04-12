@@ -1,0 +1,168 @@
+<html>
+  <head>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9983651053601021"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Odibee+Sans:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Odibee+Sans:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Odibee+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="PolyTonk is a sequel to Diep.io, with a lot of tanks and features!"
+    />
+    <meta name="keywords" content="Diep, Arras, Obstar, Maxtri, io" />
+    <meta name="theme-color" content="#ffb347" />
+    <meta name="author" content="BigFatGrub" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/polytonk-arena-icon.png" />
+  </head>
+  <title>PolyTonk | V1.5</title>
+  <a id="link"></a>
+  <script src="/min.js"></script>
+  <script src="/script.js"></script>
+  <style>
+    body {
+      cursor: crosshair;
+      background-color: #000000;
+    }
+    canvas {
+      cursor: crosshair;
+      position: fixed;
+      image-rendering: optimizeSpeed;
+      border-radius: 10px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 99%;
+      height: 99%;
+      display: inline;
+    }
+    .playerInput {
+      text-align: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      border: none;
+      outline: none;
+      font-size: 11px;
+      display: none;
+      background: none;
+      font-family: Odibee Sans;
+      font-weight: 900;
+    }
+
+    .loginInput {
+      cursor: crosshair;
+      position: fixed;
+      background-color: transparent;
+      border: none;
+      border: none;
+      outline: none;
+      font-size: 20px;
+      font-family: Odibee Sans;
+      font-weight: 900;
+    }
+    .terminalButton {
+      cursor: crosshair;
+      text-align: center;
+      position: fixed;
+      top: calc(100% - 25px - 10px);
+      left: calc(10px + 300px + 10px);
+      background: black;
+      color: white;
+      font-family: Odibee Sans;
+      border: none;
+      outline: none;
+      width: 40px;
+      height: 25px;
+      opacity: 0.8;
+    }
+    .terminalButton:hover {
+      cursor: crosshair;
+      background: grey;
+      cursor: pointer;
+    }
+  </style>
+  <canvas id="mainCanvas"></canvas>
+  <input
+    id="nameInput"
+    style="display: none"
+    class="playerInput"
+    maxlength="24"
+  />
+  <div id="loginInput" style="position: fixed; left: 0; top: 0; display: none">
+    <input id="loginNameInput" class="loginInput" maxlength="24" />
+    <input
+      id="loginPassInput"
+      type="password"
+      class="loginInput"
+      style="top: 100px"
+      maxlength="24"
+    />
+  </div>
+  <div id="terminal" style="display: none">
+    <textarea
+      id="terminalOutput"
+      style="
+        position: fixed;
+        top: calc(100% - 25px - 20px - 250px);
+        left: 10px;
+        background: black;
+        color: white;
+        font-family: Odibee Sans;
+        border: none;
+        outline: none;
+        width: 300px;
+        height: 250px;
+        opacity: 0.8;
+      "
+      placeholder="Output"
+    ></textarea>
+    <input
+      id="terminalInput"
+      style="
+        position: fixed;
+        top: calc(100% - 25px - 10px);
+        left: 10px;
+        background: black;
+        color: white;
+        font-family: Odibee Sans;
+        border: none;
+        outline: none;
+        width: 300px;
+        height: 25px;
+        opacity: 0.8;
+      "
+      placeholder="Enter a command..."
+    />
+    <button
+      id="terminalExit"
+      class="terminalButton"
+      placeholder="Enter a command..."
+    >
+      Exit
+    </button>
+  </div>
+  <script type="module" src="./config.js"></script>
+  <script type="module" src="./main.js"></script>
+  <script type="module" src="./protocol/spb.js"></script>
+  <script type="module" src="./protocol/protocol.js"></script>
+</html>

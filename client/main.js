@@ -16,7 +16,7 @@ import {
     const config = {
         language: "en",
         font: "Odibee Sans",
-        polytonkLogoStuff: [],
+        kanonoLogoStuff: [],
         screenRatio: 1,
         screenWidth: 0,
         screenHeight: 0,
@@ -1044,77 +1044,93 @@ import {
         };
     };
   util.fullScreenCanvas(canvas);
+
+  window.b = function(a, b){
+      return Math.min(((a / Math.min(1080, b)) + (a / Math.min(1920, b))) / 2, 1);
+  }
+
   let lastFrameTime = performance.now();
   let avgfps = [];
   const avgfpsLimit = 25;
-  const loop = function () {
+
+  const loop = function() {
       if (!config.mouse.pressing && player.autoFire) config.mouse.pressing = true;
+
       let delta = performance.now() - lastFrameTime;
       let fps = Math.min(1000 / delta, 60);
       lastFrameTime = performance.now();
       avgfps.push(fps);
+
       let total = 0;
       for (let i = 0; i < avgfps.length; i++) {
           total += avgfps[i];
       }
       let average = total / avgfps.length;
       config.fps = average;
-      if (avgfps.length > 25) {
+
+      if (avgfps.length > avgfpsLimit) {
           avgfps.shift();
       }
+
+      // Existing code for the ratio calculation
       player.camera.ratio = ((config.screenWidth + config.screenHeight) / 3000) / player.camera.fov;
-      config.screenRatio = ((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2;
-      if (player.mobile) config.screenRatio *= 1.25;
-      ctx.resetTransform();
-      if (config.gameState == config.gameStates.ingame || config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.menu || config.gameState == config.gameStates.goingToMenuFromDeath) {
-          elements.name.style.display = "none";
-          player.facing = Math.atan2(config.mouse.y - config.screenHeight / 2 - (player.position.y - player.camera.position.y) * player.camera.ratio, config.mouse.x - config.screenWidth / 2 - (player.position.x - player.camera.position.x) * player.camera.ratio);
-          if (config.sendInput) sendInput();
-          room.width = util.lerp(room.width, room.rwidth, 0.1);
-          room.height = util.lerp(room.height, room.rheight, 0.1);
-          player.camera.position.x = util.lerp(player.camera.position.x, player.camera.position.rx, 0.05);
-          player.camera.position.y = util.lerp(player.camera.position.y, player.camera.position.ry, 0.05);
-          player.camera.fov = util.lerp(player.camera.fov, player.camera.rfov, 0.025);
-          //player.position.vx = util.lerp(player.position.vx, 0, 0.1);
-          //player.position.vy = util.lerp(player.position.vy, 0, 0.1);
-          if (player.input[0]) player.position.vx = util.lerp(player.position.vx, -player.speed, 0.1);
-          if (player.input[1]) player.position.vx = util.lerp(player.position.vx, player.speed, 0.1);
-          if (player.input[2]) player.position.vy = util.lerp(player.position.vy, -player.speed, 0.1);
-          if (player.input[3]) player.position.vy = util.lerp(player.position.vy, player.speed, 0.1);
-          ctx.fillStyle = colors[5];
-          ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
-          ctx.translate((config.screenWidth / 2) - player.camera.position.x * player.camera.ratio, (config.screenHeight / 2) - player.camera.position.y * player.camera.ratio);
-          ctx.scale(player.camera.ratio, player.camera.ratio);
-          ctx.fillStyle = colors[4];
-          ctx.fillRect(-(room.width / 2), -(room.height / 2), room.width, room.height);
-          ctx.globalAlpha = 0.25;
-          switch (room.gm) {
-              case "2tdm": {
-                  let baseSize = room.width / 12;
-                  // draw orange base
-                  ctx.fillStyle = colors[10];
-                  ctx.fillRect(-(room.width / 2) + (baseSize / 2), room.height / 2 - baseSize - (baseSize / 2), baseSize, baseSize);
-                  // draw red base
-                  ctx.fillStyle = colors[9];
-                  ctx.fillRect((room.width / 2 - baseSize) - (baseSize / 2), -(room.height / 2) + (baseSize / 2), baseSize, baseSize);
-              }
-                  break;
-              case "4tdm": {
-                  let baseSize = room.width / 12;
-                  // draw orange base
-                  ctx.fillStyle = colors[10];
-                  ctx.fillRect(-(room.width / 2) + (baseSize / 2), room.height / 2 - baseSize - (baseSize / 2), baseSize, baseSize);
-                  // draw red base
-                  ctx.fillStyle = colors[9];
-                  ctx.fillRect((room.width / 2 - baseSize) - (baseSize / 2), -(room.height / 2) + (baseSize / 2), baseSize, baseSize);
-                  // draw green base
-                  ctx.fillStyle = colors[11];
-                  ctx.fillRect(-(room.width / 2) + (baseSize / 2), -(room.height / 2) + (baseSize / 2), baseSize, baseSize);
-                  // draw blue base
-                  ctx.fillStyle = colors[6];
-                  ctx.fillRect((room.width / 2 - baseSize) - (baseSize / 2), room.height / 2 - baseSize - (baseSize / 2), baseSize, baseSize);
-              } break;
-          };
+    
+        //if (player.mobile) config.screenRatio *= 1.25;
+        ctx.resetTransform();
+        if (config.gameState == config.gameStates.ingame || config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.menu || config.gameState == config.gameStates.goingToMenuFromDeath || config.gameState == config.gameStates.account) {
+            if (player.showingTank) {
+                ctx.filter = "blur(5px)";
+            };
+            elements.name.style.display = "none";
+            player.facing = Math.atan2(config.mouse.y - config.screenHeight / 2 - (player.position.y - player.camera.position.y) * player.camera.ratio, config.mouse.x - config.screenWidth / 2 - (player.position.x - player.camera.position.x) * player.camera.ratio);
+            if (config.sendInput) sendInput();
+            room.width = util.lerp(room.width, room.rwidth, 0.1);
+            room.height = util.lerp(room.height, room.rheight, 0.1);
+            player.camera.position.x = util.lerp(player.camera.position.x, player.camera.position.rx, 0.05);
+            player.camera.position.y = util.lerp(player.camera.position.y, player.camera.position.ry, 0.05);
+            player.camera.fov = util.lerp(player.camera.fov, player.camera.rfov, 0.025);
+            //player.position.vx = util.lerp(player.position.vx, 0, 0.1);
+            //player.position.vy = util.lerp(player.position.vy, 0, 0.1);
+            if (player.input[0]) player.position.vx = util.lerp(player.position.vx, -player.speed, 0.1);
+            if (player.input[1]) player.position.vx = util.lerp(player.position.vx, player.speed, 0.1);
+            if (player.input[2]) player.position.vy = util.lerp(player.position.vy, -player.speed, 0.1);
+            if (player.input[3]) player.position.vy = util.lerp(player.position.vy, player.speed, 0.1);
+            ctx.fillStyle = colors[5];
+            ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
+            ctx.translate((config.screenWidth / 2) - player.camera.position.x * player.camera.ratio, (config.screenHeight / 2) - player.camera.position.y * player.camera.ratio);
+            ctx.scale(player.camera.ratio, player.camera.ratio);
+            ctx.fillStyle = colors[4];
+            ctx.fillRect(-(room.width / 2), -(room.height / 2), room.width, room.height);
+          //end
+            ctx.globalAlpha = 0.25;
+            switch (room.gm) {
+                case "2dom":
+                case "2tdm": {
+                    let baseSize = room.width / 12;
+                    // draw orange base
+                    ctx.fillStyle = colors[10];
+                    ctx.fillRect(-(room.width / 2) + (baseSize / 2), room.height / 2 - baseSize - (baseSize / 2), baseSize, baseSize);
+                    // draw red base
+                    ctx.fillStyle = colors[9];
+                    ctx.fillRect((room.width / 2 - baseSize) - (baseSize / 2), -(room.height / 2) + (baseSize / 2), baseSize, baseSize);
+                }
+                break;
+            case "4tdm": {
+                let baseSize = room.width / 12;
+                // draw orange base
+                ctx.fillStyle = colors[10];
+                ctx.fillRect(-(room.width / 2) + (baseSize / 2), room.height / 2 - baseSize - (baseSize / 2), baseSize, baseSize);
+                // draw red base
+                ctx.fillStyle = colors[9];
+                ctx.fillRect((room.width / 2 - baseSize) - (baseSize / 2), -(room.height / 2) + (baseSize / 2), baseSize, baseSize);
+                // draw green base
+                ctx.fillStyle = colors[11];
+                ctx.fillRect(-(room.width / 2) + (baseSize / 2), -(room.height / 2) + (baseSize / 2), baseSize, baseSize);
+                // draw blue base
+                ctx.fillStyle = colors[6];
+                ctx.fillRect((room.width / 2 - baseSize) - (baseSize / 2), room.height / 2 - baseSize - (baseSize / 2), baseSize, baseSize);
+            } break;
+            };
             if (room.gm == "2dom") {
                 let baseSize = room.width / 12;
                 // left
@@ -1260,7 +1276,8 @@ import {
               ctx.fill();
               ctx.fillStyle = colors[2];
 
-           
+
+
               // Draw skills
               animations.skill = util.lerp(animations.skill, (config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.ingame) ? (animations.skillHover == 0 ? (player.skillPoints == 0 ? 0 : 1) : 1) : 0, 0.05);
               animations.skillX = -(animations.skill - 2) * animations.skillXSize;
@@ -1532,7 +1549,6 @@ import {
             if (!player.mobile) util.drawText(ctx, "(Enter to start)", config.screenWidth / 2, (config.screenHeight / 2 + 25 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 15, "center");
           ctx.globalAlpha = 1;
           util.drawText(ctx, "Current server: " + window.servers[config.selectedServer].name + " (S to switch)", config.screenWidth / 2, (30) - animations.menuSlide * config.screenHeight / 1.5, 15, "center");
-          
           //accounts button and accounts menu
             if (config.accountsEnabled) {
                 ctx.fillStyle = colors[10];
@@ -1574,7 +1590,7 @@ import {
                 util.drawText(ctx, "PolyTonk", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 20, "center");
             };
             // stats button, too lazy to finish.
-            ctx.globalAlpha = 1;
+            //ctx.globalAlpha = 1;
             /*ctx.strokeStyle = darkColors[8];
             let hovering = false;
             if (util.rectCollide({x: config.spacing * config.screenRatio, y: config.spacing * config.screenRatio, width: 150 * config.screenRatio, height: 40 * config.screenRatio}, {
@@ -1746,12 +1762,12 @@ import {
             util.drawText(ctx, "Reconnecting...", config.screenWidth / 2, config.screenHeight / 2 + 50 - 400 - -animations.disconnected * 400, 30, "center");
             ctx.globalAlpha = 1;
         };
-      
-      // FPS counter
-      ctx.scale(config.screenRatio, config.screenRatio);
-      ctx.fillStyle = colors[0];
-      util.drawText(ctx, Math.floor(config.fps) + " FPS", 10, 15, 15, "left");
-      ctx.resetTransform();
+
+       // FPS counter
+        ctx.scale(config.screenRatio, config.screenRatio);
+        ctx.fillStyle = colors[0];
+        util.drawText(ctx, Math.floor(config.fps) + " FPS", 10, 15, 15, "left");
+        ctx.resetTransform();
       
       //accounts menu
           if (config.gameState == config.gameStates.login) {

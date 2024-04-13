@@ -3,7 +3,7 @@ window.servers = [{
   wsLink: (window.top.location.protocol == "https:" ? "wss://" : "ws://") + window.top.location.host + "/server",
   name: "FFA",
 }, {
-  wsLink: "wss://polytonk.onrender.com:8080/server",
+  wsLink: "ws://polytonk.onrender.com:8080/server",
   name: "2TDM",
 }];
 // Year, Month, Full Date

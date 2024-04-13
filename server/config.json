@@ -1,11 +1,11 @@
 {
-  "width": 10000,
-  "height": 10000,
+  "width": 22000,
+  "height": 22000,
   "hostClient": true,
   "mapBorderSize": 350,
   "mapChangesToPlayerAmount": false,
-  "maxShapesDependsOnMapSize": true,
-  "maxShapes": 380,
+  "maxShapesDependsOnMapSize": false,
+  "maxShapes": 400,
   "port": 8080,
   "tierConfig": {
     "tier1": 15,
@@ -16,9 +16,8 @@
     "2tdm": 12
   },
   "gm": "ffa",
-  "spawnFallenBoss": true,
   "accountsEnabled": true,
-  "ipBanDatabaseEnabled": false,
+  "ipBanDatabaseEnabled" : false,
   "developerPowers": true,
   "publicCheatingLevel": 0,
   "botAmount": 1

@@ -3,11 +3,6 @@ exports.entityTypes = [{
   bodyShape: 8,
   barrels: [],
 }, {
-  name: "Wall",
-  bodyShape: 12,
-  fieldFactor: 1,
-  barrels: []
-}, {
   name: "Square",
   bodyShape: 5,
   fieldFactor: 1,

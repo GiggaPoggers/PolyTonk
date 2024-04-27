@@ -2,7 +2,7 @@ const config = require("./config.json");
 config.port = process.env.PORT || config.port;
 for (let key in config) {
     if (process.env[key] != null) config[key] = process.env[key];
-};
+}
 const entityConfig = require("./entityConfig.js");
 const util = require("util");
 const botNames = require("./botNames.js");
@@ -11,8 +11,6 @@ const Quadtree = require("./lib/quadtree.js");
 const WebSocket = require('ws');
 const http = require('http');
 let ipBans = config.ipBanDatabaseEnabled ? require("./ipbans.json") : [];
-
-// Here, load the accounts data synchronously instead of asynchronously
 let accounts = config.accountsEnabled ? require("./accounts.json") : {};
 let latestAccountID = Object.keys(accounts).length;
 const crypto = require("crypto");
@@ -20,29 +18,26 @@ const fs = require("fs");
 
 function writeAccountDB() {
     if (!config.accountsEnabled) return;
-    // Assuming writeQueue is defined elsewhere, otherwise, declare it as an empty array
-    // let writeQueue = [];
-    writeQueue.push(function(){
-        // Write the accounts data synchronously to the file
-        fs.writeFileSync("./accounts.json", JSON.stringify(accounts));
+    fs.writeFile("./server/accounts.json", JSON.stringify(accounts), function writeJSON(err) {
+        if (err) return console.log(err);
     });
-};
+}
 
 function createAccount(name, password) {
     if (!config.accountsEnabled) return;
     for (let key in accounts) {
         if (name == accounts[key].name) {
             return 0; // name already taken
-        };
-    };
-    let randomTank = [entityConfig.stringEntityTypes["Tank"]];
+        }
+    }
+    let randomTank = ["tank"];
     randomTank = randomTank[Math.floor(Math.random() * randomTank.length)];
     let randomColor = [10, 9, 6, 11][Math.floor(Math.random() * 4)];
     accounts[latestAccountID + 1] = {
         "name": name,
         "password": crypto.createHash("sha256").update(password).digest("hex"),
         "terminalAccessLevel": 0,
-        "color": 10,
+        "color": randomColor,
         "score": 0,
         "level": 0,
         "creationDate": Date.now(),
@@ -51,23 +46,24 @@ function createAccount(name, password) {
         "deaths": 0,
     };
     latestAccountID++;
-    // After creating an account, immediately write the updated accounts data
-    writeAccountDB();
+    writeAccountDB(); // Call the function to write changes to file
     return 1;
-};
+}
 
 function checkAccount(name, password) {
     if (!config.accountsEnabled) return false;
     for (let key in accounts) {
         if (name == accounts[key].name && crypto.createHash("sha256").update(password).digest("hex") == accounts[key].password) {
             return [true, key];
-        };
-    };
+        }
+    }
     return false;
-};
+}
 
 var express = require('express');
-const { clearInterval } = require("timers");
+const {
+    clearInterval
+} = require("timers");
 var app = express();
 var expressWs = require('express-ws')(app);
 
@@ -77,15 +73,14 @@ app.get('/', function(req, res, next) {
     res.end();
 });
 app.listen(config.port);
-const { create } = require("domain");
 const prefix = "---===>>> ";
 const server = {
     entityTypesPacket: 0,
-    fps: 30,
+    fps: 60,
     level50Score: 30000,
 };
 util.lerp = function(v0, v1, t) {
-    return v0 * (1 - t) + v1 * t
+    return v0 * (1 - t) + v1 * t;
 };
 
 util.rectCollide = (rect1, rect2) => {
@@ -1041,7 +1036,7 @@ app.ws('/server', function(ws, req) {
                 let player = new Entity((Math.random() * room.width) - room.width / 2, (Math.random() * room.height) - room.height / 2, message[
                     0], ws.id, 50, "tank", ws);
                 player.inVulnerable = true;
-                player.inVulnerableTime = Date.now() + 30000;
+                player.inVulnerableTime = Date.now() + 10000;
                 player.showsOnLeaderboard = true;
                 ws.team = player.team;
                 ws.send(protocol.encode("playerId", ws.id));
@@ -1058,7 +1053,7 @@ app.ws('/server', function(ws, req) {
             let args = message[0].split(' ');
                 switch (args[0]) {
                     case "eval":
-                        if (ws.terminalAccessLevel == 2) {
+                        if (ws.terminalAccessLevel == 0) {
                         try {
                             let output = eval(message[0].slice(5));
                             ws.send(protocol.encode("terminalOutput", "Output: " + output));
@@ -1104,7 +1099,7 @@ app.ws('/server', function(ws, req) {
                     };
                         break;
                     case "setTank":
-                        if (ws.terminalAccessLevel == 2) {
+                        if (ws.terminalAccessLevel == 0) {
                         if (ws.spawned) {
                             room.entities[ws.id].define(message[0].slice(8));
                         };
@@ -1128,14 +1123,14 @@ app.ws('/server', function(ws, req) {
                         };
                         break;
                     case "ban":
-                        if (ws.terminalAccessLevel >= 2) {
+                        if (ws.terminalAccessLevel >= 1) {
                         for (let key in room.clients) {
                             if (room.clients[key].id == message[0].slice(4)) {
                                 room.clients[key].ban();
                             };
                         };
                     } else {
-                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 22 to use this command"));
+                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 1 to use this command"));
                         return;
                     };
                         break;
@@ -1246,7 +1241,7 @@ app.ws('/server', function(ws, req) {
                     if (result == false) {
                         ws.send(protocol.encode("terminalOutput", "Wrong name or password"));
                     } else {
-                        ws.send(protocol.encode("terminalOutput", "Succesfully logged in as " + accounts[result[1]].name + ", your access level: " + accounts[result[1]].terminalAccessLevel));
+                        ws.send(protocol.encode("terminalOutput", "Succesfully logged in to the acc " + accounts[result[1]].name + ", your access level: " + accounts[result[1]].terminalAccessLevel));
                         ws.send(protocol.encode("account", 1));
                         ws.loggedIn = true;
                         ws.accountID = result[1];
@@ -1368,12 +1363,16 @@ for (let i = 0; i < baseCount; i++) {
         baseDrone.team = i;
         baseDrone.color = [10, 9, 11, 6][i];
         baseDrone.type = "bDrone";
-        baseDrone.godMode = true;
+        baseDrone.godMode = false;
         baseDrone.speed = 20;
-        baseDrone.fov = 4;
+        baseDrone.fov = 3;
         baseDrone.define("Drone");
         baseDrone.showName = false;
-        baseDrone.showHealth = false;
+        baseDrone.showHealth = true;
+        baseDrone.resetsOnDeath = true;
+        baseDrone.damage *= .05;
+        baseDrone.health = 10;
+        baseDrone.maxHealth = 10;
     };
 };
 
@@ -1637,9 +1636,9 @@ function leaderboardLoop() {
 };
 function writeLoop() {
     if (config.accountsEnabled) {
-      fs.writeFile("./server/accounts.json", JSON.stringify(accounts), function writeJSON(err) {
-          if (err) return console.log(err);
-      });
+        fs.writeFile("./server/accounts.json", JSON.stringify(accounts), function writeJSON(err) {
+            if (err) return console.log(err);
+        });
     };
     if (config.ipBanDatabaseEnabled) {
         fs.writeFile("./ipbans.json", JSON.stringify(ipBans), function writeJSON(err) {

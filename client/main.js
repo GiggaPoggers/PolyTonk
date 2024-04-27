@@ -1235,9 +1235,6 @@ const loop = function() {
             ctx.globalAlpha = 0.75;
             ctx.fillStyle = colors[4];
             ctx.fillRect(config.screenWidth - 200 - config.spacing, config.spacing, 200, 200);
-            ctx.strokeStyle = 'black'; // Set border color to black
-            ctx.lineWidth = 2; // Set border width to 2px
-            ctx.strokeRect(config.screenWidth - 200 - config.spacing, config.spacing, 200, 200); // Draw border
             ctx.globalAlpha = 0.6;
 
             // Function to convert number to letter
@@ -1255,28 +1252,88 @@ const loop = function() {
                     let x = config.screenWidth - 200 - config.spacing + j * sectorSize;
                     let y = config.spacing + i * sectorSize;
 
-                    // Alternate between grey and light grey
-                    let fillStyle = (i + j) % 2 === 0 ? '#CCCCCC' : '#EEEEEE';
+                    // Calculate the center of the sector
+                    let centerX = x + sectorSize / 2;
+                    let centerY = y + sectorSize / 2;
 
-                    // Draw sector
+                    // Alternate between grey and light grey
+                    let fillStyle = (i + j) % 2 === 0 ? 'rgba(204, 204, 204, 0.5)' : 'rgba(238, 238, 238, 0.5)';
+
+                    // Draw sector with transparency
                     ctx.fillStyle = fillStyle;
                     ctx.fillRect(x, y, sectorSize, sectorSize);
 
-                    // Draw sector label
+                    // Draw sector label at the center
                     ctx.fillStyle = 'black'; // Change text color to black
-                    ctx.fillText(getLetter(i) + (j + 1), x + 10, y + 20); // Adjust label position as needed
+                    let sectorLabel = getLetter(i) + (j + 1);
+                    let textWidth = ctx.measureText(sectorLabel).width;
+                    let textX = centerX - textWidth / 2; // Adjust label position horizontally
+                    let textY = centerY + 5; // Adjust label position vertically
+                    ctx.fillText(sectorLabel, textX, textY);
                 }
             }
+
+
+            // Draw bases based on game mode
+            switch (room.gm) {
+                case "2dom":
+                case "2tdm": {
+                    let baseSize = 200 / 12;
+                    // draw orange base
+                    ctx.fillStyle = colors[10];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), 200 - (baseSize * 1.5) + config.spacing, baseSize, baseSize);
+                    // draw red base
+                    ctx.fillStyle = colors[9];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), (baseSize / 2) + config.spacing, baseSize, baseSize);
+                }
+                break;
+                case "4tdm": {
+                    let baseSize = 200 / 12;
+                    // draw orange base
+                    ctx.fillStyle = colors[10];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), 200 - (baseSize * 1.5) + config.spacing, baseSize, baseSize);
+                    // draw red base
+                    ctx.fillStyle = colors[9];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), (baseSize / 2) + config.spacing, baseSize, baseSize);
+                    // draw green base
+                    ctx.fillStyle = colors[11];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), (baseSize / 2) + config.spacing, baseSize, baseSize);
+                    // draw blue base
+                    ctx.fillStyle = colors[6];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), 200 - (baseSize * 1.5) + config.spacing, baseSize, baseSize);
+                }
+                break;
+                case "2dom": {
+                    let baseSize = 200 / 12;
+                    // left
+                    ctx.fillStyle = colors[room.dominationColors[0]];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 - (200 / 3 + baseSize / 2), 200 + config.spacing - 200 + 100 - baseSize / 2, baseSize, baseSize);
+                    // right
+                    ctx.fillStyle = colors[room.dominationColors[1]];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 + (200 / 3 - baseSize / 2), 200 + config.spacing - 200 + 100 - baseSize / 2, baseSize, baseSize);
+                    // down
+                    ctx.fillStyle = colors[room.dominationColors[2]];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 - baseSize / 2, 200 + config.spacing - 200 + 100 + (200 / 3 - baseSize / 2), baseSize, baseSize);
+                    // up
+                    ctx.fillStyle = colors[room.dominationColors[3]];
+                    ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 - baseSize / 2, 200 + config.spacing - 200 + 100 - (200 / 3 + baseSize / 2), baseSize, baseSize);
+                }
+                break;
+            }
+
+            // Draw border around minimap
+            ctx.lineWidth = 5;
+            ctx.globalAlpha = 1;
+            ctx.strokeStyle = colors[8];
+            ctx.strokeRect(config.screenWidth - 200 - config.spacing, config.spacing, 200, 200);
 
             // Draw player position
             ctx.beginPath()
             ctx.arc((config.screenWidth - 200 - config.spacing) + (player.position.x / (room.rwidth / 200)) + (room.rwidth / (room.rwidth / 100)), (config.spacing) + (player.position.y / (room.rheight / 200)) + (room.rheight / (room.rheight / 100)), 3, 0, 2 * Math.PI);
             ctx.closePath()
-            ctx.fillStyle = '#2f4fc4'; // Set player color to #2f4fc4
+            ctx.fillStyle = colors[3];
             ctx.fill();
             ctx.fillStyle = colors[2];
-
-
 
             // Draw skills
             animations.skill = util.lerp(animations.skill, (config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.ingame) ? (animations.skillHover == 0 ? (player.skillPoints == 0 ? 0 : 1) : 1) : 0, 0.05);

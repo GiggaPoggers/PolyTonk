@@ -1,1 +1,50 @@
-{"1":{"name":"BigFatGrub","password":"1fb7b339330680de7685b43517f259bd02fe77533f9641d8ac3cce55fff29197","terminalAccessLevel":2,"color":10,"score":319950,"level":3.999687487792015,"creationDate":1712776761681,"tank":"9","kills":32,"deaths":5},"2":{"name":"codergautam","password":"81b87016d4dce1112890b14cf730cb19f8f2f910e788c22c873316f5cc4c3952","terminalAccessLevel":2,"color":10,"score":0,"level":0,"creationDate":1712796955062,"tank":"9","kills":0,"deaths":2}}
+{
+  "1": {
+    "name": "BigFatGrub",
+    "password": "1fb7b339330680de7685b43517f259bd02fe77533f9641d8ac3cce55fff29197",
+    "terminalAccessLevel": 2,
+    "color": 10,
+    "score": 578,
+    "level": 0.16999999999999998,
+    "creationDate": 1712776761681,
+    "tank": "9",
+    "kills": 33,
+    "deaths": 12
+  },
+  "2": {
+    "name": "codergautam",
+    "password": "81b87016d4dce1112890b14cf730cb19f8f2f910e788c22c873316f5cc4c3952",
+    "terminalAccessLevel": 2,
+    "color": 10,
+    "score": 0,
+    "level": 0,
+    "creationDate": 1712796955062,
+    "tank": "9",
+    "kills": 0,
+    "deaths": 2
+  },
+  "3": {
+    "name": "prookl",
+    "password": "908765f7f49e3d64cb40e4a5678a3a33949ea86746d22207fe1a292e9210db33",
+    "terminalAccessLevel": 2,
+    "color": 6,
+    "score": 2.9752398572351e+167,
+    "level": 2.295080763189244e+243,
+    "creationDate": 1713125157109,
+    "tank": "Annihilator",
+    "kills": 0,
+    "deaths": 2
+  },
+  "4": {
+    "name": "future",
+    "password": "61d6c0af7ad5e73f351b36b69115375682ca30c645f5d8d261e5f47122d69fa6",
+    "terminalAccessLevel": 2,
+    "color": 10,
+    "score": 0,
+    "level": 0,
+    "creationDate": 1714143847975,
+    "tank": "Twin",
+    "kills": 0,
+    "deaths": 1
+  }
+}

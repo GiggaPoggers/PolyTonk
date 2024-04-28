@@ -16,7 +16,7 @@ import {
   const config = {
       language: "en",
       font: "Odibee Sans",
-      kanonoLogoStuff: [],
+      polytonkLogoStuff: [],
       screenRatio: 1,
       screenWidth: 0,
       screenHeight: 0,
@@ -332,47 +332,15 @@ import {
       config.screenWidth = canvas.width;
       config.screenHeight = canvas.height;
       let ratio = Math.min(((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2, 1);
-      if (ratio == 1) ratio = (config.screenHeight + config.screenWidth) / 3000;
-      config.screenRatio = ratio * window.devicePixelRatio;
-      //config.screenRatio = ((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2;
+      
+      config.screenRatio = ((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2;
       console.log(config.screenRatio)
   };
   util.getRandomFromRange = function(a0, a1) {
       return a0 + (Math.random() * (a1 - a0));
   };
   util.drawText = function(ctx, content, x, y, size, align = "center", stroke = true) {
-      /*if (config.language == "tr") {
-          if (content.startsWith != undefined) {
-              if (content.startsWith("Died to a")) content = content.slice(10) + "a öldün";
-              if (content.startsWith("Score: ")) content = "Skor: " + content.slice(7);
-          };
-          if (content == "(Enter to respawn)") content = "(Yeniden başlamak için entere bas)";
-          if (content == "Leaderboard") content = "Lidersırası";
-          if (content == "Health Regen") content = "Hayat Yenilenme";
-          if (content == "Max Health") content = "Maximum Hayat";
-          if (content == "Body Damage") content = "Gövde Hasarı";
-          if (content == "Bullet Speed") content = "Mermi Hızı";
-          if (content == "Bullet Penetration") content = "Mermi Penetrasyonu";
-          if (content == "Bullet Damage") content = "Mermi Hasarı";
-          if (content == "Reload") content = "Yenileme";
-          if (content == "Movement Speed") content = "Haraket Hızı";
-      };
-      if (config.language == "zh") {
-          if (content.startsWith != undefined) {
-              if (content.startsWith("Died to a")) content = content.slice(10) + "a öldün";
-              if (content.startsWith("Score: ")) content = "Skor: " + content.slice(7);
-          };
-          if (content == "(Enter to respawn)") content = "(Yeniden başlamak için entere bas)";
-          if (content == "Leaderboard") content = "排行榜";
-          if (content == "Health Regen") content = "再生";
-          if (content == "Max Health") content = "最大健康";
-          if (content == "Body Damage") content = "";
-          if (content == "Bullet Speed") content = "";
-          if (content == "Bullet Penetration") content = "";
-          if (content == "Bullet Damage") content = "";
-          if (content == "Reload") content = "";
-          if (content == "Movement Speed") content = "";
-      };*/
+   
       ctx.textAlign = align;
       ctx.font = "900 " + size + "px " + config.font;
       if (stroke) {
@@ -1708,7 +1676,7 @@ const loop = function() {
                 util.drawText(ctx, "PolyTonk Accounts", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 20 + animations.loginButton * 2.5, "center");
             } else {
                 ctx.fillStyle = colors[0];
-                util.drawText(ctx, "PolyTonk", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 20, "center");
+                util.drawText(ctx, "PolyTonk Accounts Are Currently Disabled Due To Hosting Issues", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 25, "center");
             };
             // stats button, too lazy to finish.
             //ctx.globalAlpha = 1;
@@ -2160,7 +2128,7 @@ const loop = function() {
                     room.rwidth = message[0];
                     room.rheight = message[1];
                     room.gm = message[2];
-                    config.accountsEnabled = true;
+                    config.accountsEnabled = false;
                     break;
                 case "playerId":
                     player.id = message[0];

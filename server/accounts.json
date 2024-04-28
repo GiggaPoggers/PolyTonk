@@ -4,8 +4,8 @@
     "password": "1fb7b339330680de7685b43517f259bd02fe77533f9641d8ac3cce55fff29197",
     "terminalAccessLevel": 2,
     "color": 10,
-    "score": 578,
-    "level": 0.16999999999999998,
+    "score": 1203,
+    "level": 0.24525496936861443,
     "creationDate": 1712776761681,
     "tank": "9",
     "kills": 33,
@@ -46,5 +46,17 @@
     "tank": "Twin",
     "kills": 0,
     "deaths": 1
+  },
+  "7": {
+    "name": "GiggaPoggers",
+    "password": "92abfc150e3512f777b351fa35572578837159421234eb10f86a843e8a9cb847",
+    "terminalAccessLevel": 2,
+    "color": 10,
+    "score": 0,
+    "level": 0,
+    "creationDate": 1714316215553,
+    "tank": "tank",
+    "kills": 0,
+    "deaths": 0
   }
 }

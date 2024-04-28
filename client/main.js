@@ -778,7 +778,7 @@ document.body.onkeydown = function(e) {
                 player.autoFire = !player.autoFire;
                 config.mouse.pressing = player.autoFire;
                 break;
-            case 80:
+            case null:
                 player.showingTank = true;
                 break;
         };

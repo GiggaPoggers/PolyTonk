@@ -1313,7 +1313,7 @@ const loop = function() {
                 ctx.fillStyle = colors[config.guiColor];
                 ctx.globalAlpha = config.guiAlpha;
                 let x = config.screenWidth - 255 - config.spacing;
-                let y = config.screenHeight / 2 - (player.skillLength * 30 + 10) / 2 + 50; // Adjusted y coordinate
+                let y = config.screenHeight / 2 - (player.skillLength * 30 + 10) / 2;
                 util.roundRect(ctx, config.screenWidth - 255 - config.spacing, y, 255, player.skillLength * 30 + 10, config.guiCornerRadius);
                 ctx.fill();
                 ctx.fillStyle = colors[0];
@@ -1367,29 +1367,28 @@ const loop = function() {
                 ctx.restore();
             };
             ctx.translate(-(-animations.skillXSize + animations.skillX), 0);
-
-          // Draw messages
-          for (let i = 0; i < config.messages.length; i++) {
-              ctx.fillStyle = colors[3];
-              let message = config.messages[i];
-              if (message.time < Date.now()) {
-                  message.dissapearing = true;
-              };
-              if (message.dissapearing) {
-                  message.alpha = util.lerp(message.alpha, 0, 0.1);
-                  if (message.y < 0.05) {
-                      message.y = 0;
-                      config.messages.shift();
-                  };
-              };
-              util.roundRect(ctx, config.screenWidth / 2 - message.width / 2 - 10, config.spacing + i * 50, message.width + 20, 40, 10);
-              ctx.globalAlpha = config.guiAlpha;
-              ctx.fill();
-              ctx.globalAlpha = 1;
-              ctx.fillStyle = colors[0];
-              util.drawText(ctx, message.content, config.screenWidth / 2, (config.spacing + i * 50) + 32, 32, "center", false);
-          };
-          ctx.globalAlpha = 1;
+            // Draw messages
+            for (let i = 0; i < config.messages.length; i++) {
+                ctx.fillStyle = colors[3];
+                let message = config.messages[i];
+                if (message.time < Date.now()) {
+                    message.dissapearing = true;
+                };
+                if (message.dissapearing) {
+                    message.alpha = util.lerp(message.alpha, 0, 0.1);
+                    if (message.y < 0.05) {
+                        message.y = 0;
+                        config.messages.shift();
+                    };
+                };
+                util.roundRect(ctx, config.screenWidth / 2 - message.width / 2 - 10, config.spacing + i * 50, message.width + 20, 40, 10);
+                ctx.globalAlpha = config.guiAlpha;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.fillStyle = colors[0];
+                util.drawText(ctx, message.content, config.screenWidth / 2, (config.spacing + i * 50) + 32, 32, "center", false);
+            };
+            ctx.globalAlpha = 1;
           // Draw upgrades
           animations.tankSpin += 0.01;
           if (player.upgradeCount == 0) {

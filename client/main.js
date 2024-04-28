@@ -1673,7 +1673,7 @@ const loop = function() {
                 });
                 ctx.fill();
                 ctx.fillStyle = colors[0];
-                util.drawText(ctx, "PolyTonk Accounts", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 20 + animations.loginButton * 2.5, "center");
+                util.drawText(ctx, "PolyTonk Accounts [ADMIN ONLY]", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 20 + animations.loginButton * 2.5, "center");
             } else {
                 ctx.fillStyle = colors[0];
                 util.drawText(ctx, "PolyTonk Accounts Are Currently Disabled Due To Hosting Issues", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 25, "center");
@@ -2128,7 +2128,7 @@ const loop = function() {
                     room.rwidth = message[0];
                     room.rheight = message[1];
                     room.gm = message[2];
-                    config.accountsEnabled = false;
+                    config.accountsEnabled = true;
                     break;
                 case "playerId":
                     player.id = message[0];

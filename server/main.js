@@ -1099,7 +1099,7 @@ app.ws('/server', function(ws, req) {
                     };
                         break;
                     case "setTank":
-                        if (ws.terminalAccessLevel == 0) {
+                        if (ws.terminalAccessLevel == 2) {
                         if (ws.spawned) {
                             room.entities[ws.id].define(message[0].slice(8));
                         };

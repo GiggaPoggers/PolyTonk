@@ -209,6 +209,9 @@ const room = {
         }, 4);
     },
     shapeAmount: 0,
+    maxBossCount: 1,
+    maxDominators: config.maxDominators,
+    bossCount: 0,
     maxShapes: config.maxShapesDependsOnMapSize ? (config.width + config.height) / 250 : config.maxShapes,
     gm: config.gm,
     teams: (function() {
@@ -1277,83 +1280,99 @@ const createBot = (() => {
             upgradeSkill: true,
             randomAim: true,
         };
-        //bruh.define("Annihilator");
-        bot.showsOnLeaderboard = true;
-        bot.previousFrame.level = 1;
-        return bot;
+//bruh.define("Annihilator");
+    bot.showsOnLeaderboard = true;
+    bot.previousFrame.level = 1;
+    return bot;
+  };
+  return function (name) {
+    let bot = makeBot(name);
+    bot.onDeath = function () {
+      createBot(name);
     };
-    return function(name) {
-        let bot = makeBot(name);
-        bot.onDeath = function() {
-            createBot(name);
-        };
-    };
+  };
 })();
 for (let i = 0; i < config.botAmount; i++) {
-    createBot(botNames.botNames[i]);
-};
+  createBot(botNames.botNames[i]);
+}
 for (let i = 0; i < 0; i++) {
-    for (let i2 = -1; i2 < 2; i2++) {
-        let position = (function() {
-            let x = i2 * 1000;
-            let y = (-room.height / 2) - 300;
-            //(-room.height / 2) - 300
-            if (i == 1) {
-                x = i2 * 1000;
-                y = -((-room.height / 2) - 300);
-            };
-            if (i == 2) {
-                x = (-room.height / 2) - 300;
-                y = i2 * 1000;
-            };
-            if (i == 3) {
-                x = -((-room.height / 2) - 300);
-                y = i2 * 1000;
-            };
-            return {
-                x: x,
-                y: y,
-            }
-        })();
-        let arenaCloser = new Entity(position.x, position.y, "Arena Closer", idGenerator.generateId(), 50);
-        arenaCloser.scoreLock = 0;
-        //arenaCloser.shooting = true;
-        arenaCloser.hasAI = true;
-        arenaCloser.define("Arena Closer");
-        arenaCloser.skill.spd = 8;
-        arenaCloser.showHealth = false;
-        arenaCloser.skill.rld = 8;
-        arenaCloser.skill.dmg = 8;
-        arenaCloser.skill.pen = 8;
-        arenaCloser.skill.bls = 8;
-        arenaCloser.score = 0;
-        arenaCloser.team = -1;
-        arenaCloser.color = 12 + Math.round(Math.random() * 3);
-        arenaCloser.factor.size = 3;
-        arenaCloser.canBypassBorder = true;
-        arenaCloser.godMode = true;
-    };
-};
-function spawnFallenBoss(type = "Booster") {
-    let boss = new Entity(0, 0, "Fallen " + type, idGenerator.generateId(), 50);
+  for (let i2 = -1; i2 < 2; i2++) {
+    let position = (function () {
+      let x = i2 * 1000;
+      let y = -room.height / 2 - 300;
+      //(-room.height / 2) - 300
+      if (i == 1) {
+        x = i2 * 1000;
+        y = -(-room.height / 2 - 300);
+      }
+      if (i == 2) {
+        x = -room.height / 2 - 300;
+        y = i2 * 1000;
+      }
+      if (i == 3) {
+        x = -(-room.height / 2 - 300);
+        y = i2 * 1000;
+      }
+      return {
+        x: x,
+        y: y,
+      };
+    })();
+    let arenaCloser = new Entity(
+      position.x,
+      position.y,
+      "Arena Closer",
+      idGenerator.generateId(),
+      50
+    );
+    arenaCloser.scoreLock = 0;
+    //arenaCloser.shooting = true;
+    arenaCloser.hasAI = true;
+    arenaCloser.define("Arena Closer");
+    arenaCloser.skill.spd = 8;
+    arenaCloser.showHealth = false;
+    arenaCloser.skill.rld = 8;
+    arenaCloser.skill.dmg = 8;
+    arenaCloser.skill.pen = 8;
+    arenaCloser.skill.bls = 8;
+    arenaCloser.score = 0;
+    arenaCloser.team = -1;
+    arenaCloser.color = 12 + Math.round(Math.random() * 3);
+    arenaCloser.factor.size = 3;
+    arenaCloser.canBypassBorder = true;
+    arenaCloser.godMode = true;
+  }
+}
+spawnDominators()
+function spawnDominators() {
+  if (room.bossCount < room.maxBossCount) {
+    room.bossCount++
+    let type = ["PolyBrute 😈", "PolyBlazar 😈", "C̸̤̄̕ò̷̺͛͐r̷̨̻̞̀̃r̷̖͖͖̀u̴̲̓́̇p̴̟̉̐t̸̘̝͚̆̔͐e̵̝̓̂d̵̡͓̝̿̿ ̵̡̗̾P̶͇̽ǫ̸̥̬̓̔ḽ̶̰̻̿̀y̸̤̑B̵̻͆o̴̺͆t̷͙̹͚̐̇  😈"]
+    let spawnType = Math.floor(Math.random() * 3)
+    let boss = new Entity(Math.random() * room.width / 10, Math.random() * room.height / 10, type[spawnType], idGenerator.generateId(), 50, "tank", null, true);
     boss.scoreLock = 0;
-        //arenaCloser.shooting = true;
+    //arenaCloser.shooting = true;
     boss.hasAI = true;
-    boss.define(type);
+    boss.define(type[spawnType]);
     boss.skill.rld = 5;
     boss.skill.dmg = 4;
     boss.skill.pen = 4;
     boss.skill.bls = 6;
     boss.changeMaxHealth = false;
-    boss.maxHealth = 30000;
-    boss.health = 30000;
-    boss.score = 0;
+    boss.maxHealth = 1000;
+    boss.health = 1000;
+    boss.score = 0
     boss.team = -1;
-    boss.color = 4;
+    boss.color = 12 + spawnType;
     boss.factor.size = 2.5;
     boss.canBypassBorder = true;
-    boss.value = 100000;
-};
+    boss.value = 5000;
+    boss.onDeath = function() {
+      room.bossCount--
+    }
+    setInterval(spawnDominators, 10000)
+  }
+}
 let baseCount = room.teamBaseMode == -1 ? 0 : [2, 4][room.teamBaseMode];
 for (let i = 0; i < baseCount; i++) {
     for (let i2 = 0; i2 < 4; i2++) {

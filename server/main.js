@@ -1343,36 +1343,68 @@ for (let i = 0; i < 0; i++) {
     arenaCloser.godMode = true;
   }
 }
-spawnDominators()
 function spawnDominators() {
   if (room.bossCount < room.maxBossCount) {
-    room.bossCount++
-    let type = ["PolyBrute 😈", "PolyBlazar 😈", "C̸̤̄̕ò̷̺͛͐r̷̨̻̞̀̃r̷̖͖͖̀u̴̲̓́̇p̴̟̉̐t̸̘̝͚̆̔͐e̵̝̓̂d̵̡͓̝̿̿ ̵̡̗̾P̶͇̽ǫ̸̥̬̓̔ḽ̶̰̻̿̀y̸̤̑B̵̻͆o̴̺͆t̷͙̹͚̐̇  😈"]
-    let spawnType = Math.floor(Math.random() * 3)
-    let boss = new Entity(Math.random() * room.width / 10, Math.random() * room.height / 10, type[spawnType], idGenerator.generateId(), 50, "tank", null, true);
+    room.bossCount++;
+    let type = ["PolyBrute 😈", "PolyBlazar 😈", "C̸̤̄̕ò̷̺͛͐r̷̨̻̞̀̃r̷̖͖͖̀u̴̲̓́̇p̴̟̉̐t̸̘̝͚̆̔͐e̵̝̓̂d̵̡͓̝̿̿ ̵̡̗̾P̶͇̽ǫ̸̥̬̓̔ḽ̶̰̻̿̀y̸̤̑B̵̻͆o̴̺͆t̷͙̹͚̐̇  😈"];
+    let spawnType = Math.floor(Math.random() * type.length);
+    let bossName = type[spawnType];
+    let boss = new Entity(Math.random() * room.width / 10, Math.random() * room.height / 10, bossName, idGenerator.generateId(), 50, "tank", null, true);
     boss.scoreLock = 0;
-    //arenaCloser.shooting = true;
     boss.hasAI = true;
-    boss.define(type[spawnType]);
+    boss.define(bossName);
     boss.skill.rld = 5;
     boss.skill.dmg = 4;
     boss.skill.pen = 4;
     boss.skill.bls = 6;
     boss.changeMaxHealth = false;
-    boss.maxHealth = 1000;
-    boss.health = 1000;
-    boss.score = 0
+    boss.maxHealth = .05;
+    boss.health = .05;
+    boss.score = 0;
     boss.team = -1;
     boss.color = 12 + spawnType;
     boss.factor.size = 2.5;
     boss.canBypassBorder = true;
     boss.value = 5000;
     boss.onDeath = function() {
-      room.bossCount--
+      room.bossCount--;
+      broadcastMessage(`The boss: "${bossName}" has been killed`);
+      setTimeout(spawnDominators, 600000); // Respawn after 10 minutes (600,000 milliseconds)
+
+      // Drop coins
+      for (let i = 0; i < 10; i++) { // Change 4 to the desired number of coins to spawn
+        let choose = 0;
+        let alpha = false;
+        let shape = new Entity(
+          boss.x + (Math.random() * 100 - 50), // Randomize position around the boss
+          boss.y + (Math.random() * 100 - 50),
+          "", 
+          idGenerator.generateId(), 
+          (40 + (choose * 15)) * (alpha ? 2 : 1), 
+          "food", 
+          null, 
+          true
+        );
+        shape.team = -1;
+        shape.define("Coin");
+        shape.color = 12;
+        shape.health = 5;
+        shape.maxHealth = 5; // Set maxHealth for the coins
+        shape.value = 2500;
+        shape.showName = false;
+        shape.facing = Math.random() * (Math.PI * 2);
+      }
     }
-    setInterval(spawnDominators, 10000)
+    broadcastMessage(`The boss: "${bossName}" has spawned`);
   }
 }
+
+// Call the function once to start the spawning process
+spawnDominators();
+
+
+
+
 let baseCount = room.teamBaseMode == -1 ? 0 : [2, 4][room.teamBaseMode];
 for (let i = 0; i < baseCount; i++) {
     for (let i2 = 0; i2 < 4; i2++) {
@@ -1676,8 +1708,8 @@ for (let i = 0; i < 0; i++) {
     shape.score = 22275;
     shape.showName = false;
     shape.facing = Math.random() * (Math.PI * 2);
-    shape.maxHealth = (((choose + 1) * (choose + 1)) * 5) * (alpha ? 50 : 1);
-    shape.health = (((choose + 1) * (choose + 1)) * 5) * (alpha ? 50 : 1);
+  shape.maxHealth = (((choose + 1) * (choose + 1)) * 5) * (alpha ? 50 : 1) * (superAlpha ? 5 : 1);
+  shape.health = shape.maxHealth;
     shape.value = (((choose + 1) * (choose + 1)) * 25) * (alpha ? 5 : 1);
 };
 for (let i = 0; i < 0; i++) {

@@ -1,6 +1,6 @@
 {
-  "width": 22000,
-  "height": 22000,
+  "width": 25000,
+  "height": 25000,
   "hostClient": true,
   "mapBorderSize": 350,
   "mapChangesToPlayerAmount": false,
@@ -20,5 +20,6 @@
   "ipBanDatabaseEnabled" : false,
   "developerPowers": true,
   "publicCheatingLevel": 0,
-  "botAmount": 1
+  "botAmount": 1,
+  "maxDominators": 3
 }

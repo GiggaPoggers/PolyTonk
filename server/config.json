@@ -5,7 +5,7 @@
   "mapBorderSize": 350,
   "mapChangesToPlayerAmount": false,
   "maxShapesDependsOnMapSize": false,
-  "maxShapes": 400,
+  "maxShapes": 450,
   "port": 8080,
   "tierConfig": {
     "tier1": 15,

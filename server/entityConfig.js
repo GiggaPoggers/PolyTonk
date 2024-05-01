@@ -5,6 +5,33 @@ exports.entityTypes = [
     barrels: [],
   },
   {
+    name: "Spectator",
+    fieldFactor: 10,
+    bodyShape: 0,
+    barrels: [],
+  },
+  {
+    name: "Nova",
+    fieldFactor: 1,
+    bodyShape: 8,
+    shell: {
+      shape: 3,
+      color: 8,
+      spinning: true,
+      spinSpeed: 15,
+      size: 5,
+      shape: 6
+    },
+    barrels: []
+  },
+  {
+    name: "Portal",
+    bodyShape: 6,
+    sizeFactor: 10,
+    fieldFactor: 1.21,
+    barrels: [],
+  },
+  {
     name: "Square",
     bodyShape: 5,
     fieldFactor: 1,
@@ -206,6 +233,7 @@ exports.entityTypes = [
   },
   {
     name: "Mothership",
+    canMove: false,
     bodyShape: 16,
     fieldFactor: 1.5,
     sizeFactor: 3,
@@ -1358,7 +1386,7 @@ exports.entityTypes = [
     })(),
   },
   {
-    name: "Nephele",
+    name: "Dominator",
     bodyShape: 8,
     sizeFactor: 2.2,
     hltFactor: 12,

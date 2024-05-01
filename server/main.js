@@ -210,8 +210,6 @@ const room = {
     },
     shapeAmount: 0,
     maxBossCount: 1,
-    portals: 0,
-    maxPortals: config.maxPortals,
     maxDominators: config.maxDominators,
     bossCount: 0,
     maxShapes: config.maxShapesDependsOnMapSize ? (config.width + config.height) / 250 : config.maxShapes,
@@ -1269,7 +1267,6 @@ const createBot = (() => {
         let bot = new Entity((Math.random() * room.width) - room.width / 2, (Math.random() * room.height) - room.height / 2, name, idGenerator
             .generateId(), 50);
         bot.shooting = true;
-        bot.maxLevel = 10;
         bot.hasAI = true;
         bot.AISettings = {
             fov: 3,
@@ -1346,23 +1343,6 @@ for (let i = 0; i < 0; i++) {
     arenaCloser.godMode = true;
   }
 }
-//test portal
-function spawnPortal() {
-  if (room.portals < room.maxPortals) {
-    room.portals++
-    let portal = new Entity(0, 0, "", idGenerator.generateId(), 100, "Mothership", null, true)
-    portal.godMode = true
-    portal.scoreLock = 0
-    portal.define("Mothership")
-    portal.damage *= 0
-    portal.team = -1;
-    portal.color = 17
-    portal.type = "Mothership"
-    portal.hasAI = true;
-  }
-}
-spawnPortal()
-//test portal end
 function spawnDominators() {
   if (room.bossCount < room.maxBossCount) {
     room.bossCount++;
@@ -1373,13 +1353,13 @@ function spawnDominators() {
     boss.scoreLock = 0;
     boss.hasAI = true;
     boss.define(bossName);
-    boss.skill.rld = 5;
-    boss.skill.dmg = 4;
-    boss.skill.pen = 4;
-    boss.skill.bls = 6;
+    boss.skill.rld = 8;
+    boss.skill.dmg = 8;
+    boss.skill.pen = 8;
+    boss.skill.bls = 8;
     boss.changeMaxHealth = false;
-    boss.maxHealth = 2500;
-    boss.health = 2500;
+    boss.maxHealth = 1000;
+    boss.health = 1000;
     boss.score = 0;
     boss.team = -1;
     boss.color = 12 + spawnType;
@@ -1585,7 +1565,6 @@ function gameLoop() {
             if (room.entities[candidateEntity.id].team != entity.team) {
               entity.health -= room.entities[candidateEntity.id].damage / Math.sqrt(Math.sqrt(entity.damage));
               room.entities[candidateEntity.id].health -= entity.damage / Math.sqrt(Math.sqrt(room.entities[candidateEntity.id].damage));
-              
             };
           };
                 };

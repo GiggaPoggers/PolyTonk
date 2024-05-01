@@ -952,23 +952,24 @@ document.body.onkeyup = function(e) {
               return;
           };
       };
-      if (config.gameState == config.gameStates.menu && player.mobile) {
-          if (util.rectCollide({
-                  x: config.mouse.x,
-                  y: config.mouse.y,
-                  width: 1,
-                  height: 1
-              }, {
-                  x: config.screenWidth / 2 + 160 * config.screenRatio,
-                  y: (config.screenHeight / 2 - 50 * config.screenRatio - animations.menu * 400 * config.screenRatio) - animations.menuSlide * config.screenHeight / 1.5,
-                  width: 35 * config.screenRatio,
-                  height: 35 * config.screenRatio
-              })) {
-              player.spawn();
-              return;
-          };
+    if (config.gameState == config.gameStates.menu) {
+      if (util.rectCollide({
+              x: config.mouse.x,
+              y: config.mouse.y,
+              width: 1,
+              height: 1
+          }, {
+              x: config.screenWidth / 2 + 140 * config.screenRatio,
+              y: (config.screenHeight / 2 - 50 * config.screenRatio - animations.menu * 400 * config.screenRatio) - animations.menuSlide * config.screenHeight / 1.5,
+              width: 35 * config.screenRatio,
+              height: 35 * config.screenRatio
+          })) {
+          player.spawn();
+          return;
       };
-      config.mouse.pressing = true;
+    };
+    config.mouse.pressing = true;
+
   };
 
   document.body.onmouseup = function() {
@@ -1605,8 +1606,7 @@ const loop = function() {
           ctx.fillStyle = originalFillStyle; // Restore the original text color
           util.drawText(ctx, "PolyTonk" + (window.beta ? " (private)" : ""), config.screenWidth / 2, (config.screenHeight / 2 - 100 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 120, "center");
 
-          // Draw the note text with smaller font size
-          if (player.mobile) util.drawText(ctx, "NOTE: Mobile version of PolyTonk is not finished yet.", config.screenWidth / 2, (config.screenHeight / 2 - 200 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 20, "center");
+
 
           // Restore the original fill style (text color)
           ctx.fillStyle = originalFillStyle;
@@ -1715,28 +1715,29 @@ const loop = function() {
             for (let i = 0; i < window.servers.length; i++) {
                 util.drawText(ctx, window.servers[i].name + (config.selectedServer == i ? " <" : ""), (animations.servers * 1000) - 1005, config.screenHeight / 2 + i * 100, 50, "left");
             };
-            if (player.mobile) {
-                ctx.fillStyle = darkColors[10];
-                util.roundRect(ctx, config.screenWidth / 2 + 160, (config.screenHeight / 2 - 48 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 35, 35, 5);
-                ctx.fill();
-                ctx.fillStyle = colors[10];
-                util.roundRect(ctx, config.screenWidth / 2 + 160, (config.screenHeight / 2 - 50 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 35, 35, 5);
-                ctx.fill();
-                ctx.fillStyle = colors[0];
-                util.drawPolygon(ctx, config.screenWidth / 2 + 160 + (35 / 2), (config.screenHeight / 2 - 50 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5 + (35 / 2), 10, 3, 0);
-                ctx.fill();
-            };
+        //play button
+        ctx.fillStyle = darkColors[9];
+        util.roundRect(ctx, config.screenWidth / 2 + 140, (config.screenHeight / 2 - 48 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 35, 35, 5);
+        ctx.fill();
+        ctx.fillStyle = colors[9];
+        util.roundRect(ctx, config.screenWidth / 2 + 140, (config.screenHeight / 2 - 50 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 35, 35, 5);
+        ctx.fill();
+        ctx.fillStyle = colors[0];
+        util.drawPolygon(ctx, config.screenWidth / 2 + 140 + (35 / 2), (config.screenHeight / 2 - 50 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5 + (35 / 2), 10, 3, 0);
+        ctx.fill();
+        //end
+        //name input
             ctx.fillStyle = colors[8];
-            util.roundRect(ctx, config.screenWidth / 2 - 150, (config.screenHeight / 2 - 48 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 300, 35, 5);
+            util.roundRect(ctx, config.screenWidth / 2 - 170, (config.screenHeight / 2 - 48 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 300, 35, 5);
             ctx.fill();
             ctx.fillStyle = colors[2];
-            util.roundRect(ctx, config.screenWidth / 2 - 150, (config.screenHeight / 2 - 50 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 300, 35, 5);
+            util.roundRect(ctx, config.screenWidth / 2 - 170, (config.screenHeight / 2 - 50 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5, 300, 35, 5);
             ctx.fill();
             elements.name.style.top = (((config.screenHeight / 2 - 50 - animations.menu * 400) - animations.menuSlide * config.screenHeight / 1.5) * config.screenRatio) / window.devicePixelRatio + "px";
-            elements.name.style.left = ((config.screenWidth / 2 - 150) * config.screenRatio) / window.devicePixelRatio + "px";
+            elements.name.style.left = ((config.screenWidth / 2 - 170) * config.screenRatio) / window.devicePixelRatio + "px";
             elements.name.style.width = (300 * config.screenRatio) / window.devicePixelRatio + "px"
             elements.name.style.height = (35 * config.screenRatio) / window.devicePixelRatio + "px"
-            elements.name.style.fontSize = (35 * config.screenRatio) / window.devicePixelRatio + "px"
+            elements.name.style.fontSize = (30 * config.screenRatio) / window.devicePixelRatio + "px"
             config.screenWidth *= config.screenRatio;
             config.screenHeight *= config.screenRatio;
             ctx.resetTransform();
@@ -1746,6 +1747,7 @@ const loop = function() {
             ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
             ctx.globalAlpha = 1;
         };
+  //end
       // Death screen
       if (player.dead || player.dead == 2) {
           if (player.dead == 2) {

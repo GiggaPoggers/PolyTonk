@@ -1748,94 +1748,31 @@ const loop = function() {
             ctx.globalAlpha = 1;
         };
   //end
-      // Death screen
-      if (player.dead || player.dead == 2) {
-          if (player.dead == 2) {
-              animations.deathScreen = util.lerp(animations.deathScreen, 0, 0.05);
-              if (animations.deathScreen < 0.05) player.dead = false;
-          } else animations.deathScreen = util.lerp(animations.deathScreen, 1, 0.05);
-          ctx.globalAlpha = animations.deathScreen / 2;
-          ctx.fillStyle = colors[1];
-          ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
-          ctx.globalAlpha = animations.deathScreen;
-
-          // Adjust dimensions of the grey background
-          const textBackgroundWidth = 350; // Increased width
-          const textBackgroundHeight = 250; // Increased height
-          const borderThickness = 5; // Adjust as needed
-          const backgroundX = (config.screenWidth - textBackgroundWidth) / 2;
-          const backgroundY = (config.screenHeight - textBackgroundHeight) / 2 + (400 - animations.deathScreen * 400); // Adjust based on animation progress
-          const cornerRadius = 10; // Adjust as needed
-
-          // Draw black border
-        ctx.fillStyle = 'rgba(69, 86, 152, 0.8)';
-          ctx.roundRect(backgroundX - borderThickness, backgroundY - borderThickness, textBackgroundWidth + borderThickness * 2, textBackgroundHeight + borderThickness * 2, cornerRadius).fill();
-
-          // Draw grey background
-          ctx.fillStyle = 'rgba(90, 113, 200, 0.5)'; // Adjust background color and alpha value as needed
-          ctx.roundRect(backgroundX, backgroundY, textBackgroundWidth, textBackgroundHeight, cornerRadius).fill();
-
-          ctx.fillStyle = colors[2];
-          // Draw text on top of the grey background
-          util.drawText(ctx, player.deathMessage, config.screenWidth / 2, config.screenHeight / 2 - 50, 25, "center");
-          util.drawText(ctx, "Died to a " + entityTypes[player.killerType].name, config.screenWidth / 2, config.screenHeight / 2 - 100, 20, "center");
-          util.drawText(ctx, "Score: " + player.score, (config.screenWidth / 2) - 150, config.screenHeight / 2 - 50, 25, "left");
-          util.drawText(ctx, "Level " + player.level + " " + player.tank.name, (config.screenWidth / 2) - 150, config.screenHeight / 2, 25, "left");
-          util.drawText(ctx, "Kills: " + player.kills, (config.screenWidth / 2) - 150, config.screenHeight / 2 + 50, 25, "left");
-          util.drawText(ctx, "(Press Enter to restart)", config.screenWidth / 2, config.screenHeight / 2 + 100, 20, "center");
-          // offCanvas.deathIcon
-          ctx.globalAlpha *= 0.9;
-          ctx.drawImage(offCanvas.deathIcon.canvas, config.screenWidth / 2, config.screenHeight / 2 - 50);
-          ctx.globalAlpha = 1;
-        /*animations.deathScreen = util.lerp(animations.deathScreen, 1, 0.05);
-          ctx.globalAlpha = animations.deathScreen / 4;
-          ctx.fillStyle = colors[1];
-          ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);*/
-      }
-
-      // Function to draw rounded rectangle
-      CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
-          if (width < 2 * radius) radius = width / 2;
-          if (height < 2 * radius) radius = height / 2;
-          this.beginPath();
-          this.moveTo(x + radius, y);
-          this.arcTo(x + width, y, x + width, y + height, radius);
-          this.arcTo(x + width, y + height, x, y + height, radius);
-          this.arcTo(x, y + height, x, y, radius);
-          this.arcTo(x, y, x + width, y, radius);
-          this.closePath();
-          return this;
-      };
-
-
-      // Function to draw rounded rectangle
-      CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
-          if (width < 2 * radius) radius = width / 2;
-          if (height < 2 * radius) radius = height / 2;
-          this.beginPath();
-          this.moveTo(x + radius, y);
-          this.arcTo(x + width, y, x + width, y + height, radius);
-          this.arcTo(x + width, y + height, x, y + height, radius);
-          this.arcTo(x, y + height, x, y, radius);
-          this.arcTo(x, y, x + width, y, radius);
-          this.closePath();
-          return this;
-      };
-
-
-      // Function to draw rounded rectangle
-      CanvasRenderingContext2D.prototype.roundRect = function (x, y, width, height, radius) {
-          if (width < 2 * radius) radius = width / 2;
-          if (height < 2 * radius) radius = height / 2;
-          this.beginPath();
-          this.moveTo(x + radius, y);
-          this.arcTo(x + width, y, x + width, y + height, radius);
-          this.arcTo(x + width, y + height, x, y + height, radius);
-          this.arcTo(x, y + height, x, y, radius);
-          this.arcTo(x, y, x + width, y, radius);
-          this.closePath();
-          return this;
-      };
+  if (player.dead || player.dead == 2) {
+      if (player.dead == 2) {
+          animations.deathScreen = util.lerp(animations.deathScreen, 0, 0.05);
+          if (animations.deathScreen < 0.05) player.dead = false;
+      } else animations.deathScreen = util.lerp(animations.deathScreen, 1, 0.05);
+      ctx.globalAlpha = animations.deathScreen / 2;
+      ctx.fillStyle = colors[1];
+      ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
+      ctx.globalAlpha = animations.deathScreen;
+      ctx.fillStyle = colors[2];
+      //util.drawText(ctx, player.deathMessage, config.screenWidth / 2, config.screenHeight / 2 - 50 - 400 - -animations.deathScreen * 400, 10, "center");
+      util.drawText(ctx, "Died to a " + entityTypes[player.killerType].name, config.screenWidth / 2, config.screenHeight / 2 - 100 - 400 - -animations.deathScreen * 400, 10, "center");
+      util.drawText(ctx, "Score: " + player.score, (config.screenWidth / 2) - 150, config.screenHeight / 2 - 50 - 400 - -animations.deathScreen * 400, 20, "left");
+      util.drawText(ctx, "Level " + player.level + " " + player.tank.name, (config.screenWidth / 2) - 150, config.screenHeight / 2 - 400 - -animations.deathScreen * 400, 20, "left");
+      util.drawText(ctx, "Kills: " + player.kills, (config.screenWidth / 2) - 150, config.screenHeight / 2 + 50 - 400 - -animations.deathScreen * 400, 20, "left");
+      util.drawText(ctx, "(Enter to respawn)", config.screenWidth / 2, config.screenHeight / 2 + 100 - 400 - -animations.deathScreen * 400, 10, "center");
+      // offCanvas.deathIcon
+      ctx.globalAlpha*=0.9
+      ctx.drawImage(offCanvas.deathIcon.canvas, config.screenWidth / 2, config.screenHeight / 2 - 50 - 400 - -animations.deathScreen * 400)
+      ctx.globalAlpha = 1;
+      /*animations.deathScreen = util.lerp(animations.deathScreen, 1, 0.05);
+      ctx.globalAlpha = animations.deathScreen / 4;
+      ctx.fillStyle = colors[1];
+      ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);*/
+  };
 
 
 

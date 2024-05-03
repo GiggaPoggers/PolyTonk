@@ -212,6 +212,8 @@ const room = {
     maxBossCount: 1,
     maxDominators: config.maxDominators,
     bossCount: 0,
+    portals: 0,
+   maxPortals: config.maxPortalsDependsOnMapSize ? (config.width + config.height) / 250 : config.maxPortals,
     maxShapes: config.maxShapesDependsOnMapSize ? (config.width + config.height) / 250 : config.maxShapes,
     gm: config.gm,
     teams: (function() {
@@ -1343,10 +1345,57 @@ for (let i = 0; i < 0; i++) {
     arenaCloser.godMode = true;
   }
 }
+// Code down for a fix
+// function spawnParticle(x, y, color) {
+//   setTimeout(() => {
+//     let particle = new Entity(0, 0, "", idGenerator.generateId, 10, "particle", null, false)
+//     let angle = Math.atan2(
+//       x+Math.PI*2,
+//       y+Math.PI*2
+//     )
+//     particle.speed = 2
+//     particle.define("Particle")
+//     particle.x = x
+//     particle.y = y
+//     particle.vx += x+Math.cos(angle)*particle.speed
+//     particle.vy += y+Math.sin(angle)*particle.speed
+//     particle.team = -1
+//     particle.color = color
+//   }, 100)
+// }
+let portalSpawned = false; // Flag to track if the portal has been spawned
+
+function spawnPortal() {
+  if (!portalSpawned) {
+    let portal = new Entity(0, 0, "Destroy Portal To Start A Boss Fight", idGenerator.generateId(), 100, "portal", null, true);
+    portal.godMode = false;
+    portal.scoreLock = 0;
+    portal.define("Portal");
+    portal.health = 520;
+    portal.maxHealth = 500; // Set maxHealth for the coins
+    portal.value = 1000;
+    portal.damage *= 0;
+    portal.team = -1;
+    portal.color = 17;
+    portal.type = "portal";
+
+    room.portals++; // Increment portal count
+    portalSpawned = true; // Set flag to true
+
+    // Set event listener for portal destruction
+    portal.onDeath = function() {
+      spawnDominators(); // Spawn boss when portal is destroyed
+      portalSpawned = false; // Reset flag
+    }
+
+    broadcastMessage("The portal has spawned");
+  }
+}
+
 function spawnDominators() {
   if (room.bossCount < room.maxBossCount) {
     room.bossCount++;
-    let type = ["PolyBrute 😈", "PolyBlazar 😈", "C̸̤̄̕ò̷̺͛͐r̷̨̻̞̀̃r̷̖͖͖̀u̴̲̓́̇p̴̟̉̐t̸̘̝͚̆̔͐e̵̝̓̂d̵̡͓̝̿̿ ̵̡̗̾P̶͇̽ǫ̸̥̬̓̔ḽ̶̰̻̿̀y̸̤̑B̵̻͆o̴̺͆t̷͙̹͚̐̇  😈"];
+    let type = ["PolyBrute 😈", "PolyBlazar 😈", "C̸̤̄̕ò̷̺͛͐r̷̨̻̀̃r̷̖͖͖̀u̴̲̓́̇p̴̟̉̐t̸̘̝͚̆̔͐e̵̝̓̂d̵̡͓̝̿̿ ̵̡̗̾P̶͇̽ǫ̸̥̬̓̔ḽ̶̰̻̿̀y̸̤̑B̵̻͆o̴̺͆t̷͙̹͚̐̇  😈"];
     let spawnType = Math.floor(Math.random() * type.length);
     let bossName = type[spawnType];
     let boss = new Entity(Math.random() * room.width / 10, Math.random() * room.height / 10, bossName, idGenerator.generateId(), 50, "tank", null, true);
@@ -1366,13 +1415,15 @@ function spawnDominators() {
     boss.factor.size = 2.5;
     boss.canBypassBorder = true;
     boss.value = 5000;
+
+    // Set event listener for boss death
     boss.onDeath = function() {
       room.bossCount--;
-      broadcastMessage(`The boss: "${bossName}" has been killed`);
-      setTimeout(spawnDominators, 600000); // Respawn after 10 minutes (600,000 milliseconds)
+      broadcastMessage(`The boss: "${bossName}" has been killed. The portal will respawn in 10 minutes.`);
+      setTimeout(spawnPortal, 600000); // Respawn the portal after 30 seconds
 
       // Drop coins
-      for (let i = 0; i < 10; i++) { // Change 4 to the desired number of coins to spawn
+      for (let i = 0; i < 10; i++) { // Change 10 to the desired number of coins to spawn
         let choose = 0;
         let alpha = false;
         let shape = new Entity(
@@ -1395,14 +1446,13 @@ function spawnDominators() {
         shape.facing = Math.random() * (Math.PI * 2);
       }
     }
-    broadcastMessage(`The boss: "${bossName}" has spawned`);
+
+    broadcastMessage(`The portal has been destroyed. The boss: "${bossName}" has spawned.`);
   }
 }
 
 // Call the function once to start the spawning process
-spawnDominators();
-
-
+spawnPortal();
 
 
 let baseCount = room.teamBaseMode == -1 ? 0 : [2, 4][room.teamBaseMode];

@@ -20,6 +20,6 @@
   "ipBanDatabaseEnabled" : false,
   "developerPowers": true,
   "publicCheatingLevel": 0,
-  "botAmount": 1,
+  "botAmount": 0,
   "maxDominators": 1
 }

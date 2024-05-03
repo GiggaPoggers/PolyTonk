@@ -1368,13 +1368,11 @@ let portalSpawned = false; // Flag to track if the portal has been spawned
 function spawnPortal() {
   if (!portalSpawned) {
     let portal = new Entity(0, 0, "Destroy Portal To Start A Boss Fight", idGenerator.generateId(), 100, "portal", null, true);
-    portal.godMode = false;
     portal.scoreLock = 0;
     portal.define("Portal");
-    portal.health = 520;
-    portal.maxHealth = 500; // Set maxHealth for the coins
-    portal.value = 1000;
-    portal.damage *= 0;
+    portal.health = 1000;
+    portal.maxHealth = 1000; // Set maxHealth
+    portal.value = 5000;
     portal.team = -1;
     portal.color = 17;
     portal.type = "portal";
@@ -1407,8 +1405,8 @@ function spawnDominators() {
     boss.skill.pen = 8;
     boss.skill.bls = 8;
     boss.changeMaxHealth = false;
-    boss.maxHealth = 1000;
-    boss.health = 1000;
+    boss.maxHealth = 2500;
+    boss.health = 2500;
     boss.score = 0;
     boss.team = -1;
     boss.color = 12 + spawnType;
@@ -1494,7 +1492,7 @@ function createShape(choose = (function() {
     return chance
 })(), alpha = Math.random() > 0.9, superAlpha = alpha ? Math.random() > 0.9 : false, spawnPosition = [(Math.random() * room.width) - room.width / 2, (Math
     .random() * room.height) - room.height / 2]) {
-    let shapes = ["Square", "Triangle", "Pentagon", "Hexagon"]
+    let shapes = ["Pentagon", "Hexagon", "Heptagon", "Octagon"]
     let shape = new Entity(spawnPosition[0], spawnPosition[1], "", idGenerator.generateId(), (40 + (choose * 15)) * (alpha ? 2 : 1) * (superAlpha ? 2 : 1),
         "food", null, true);
     shape.team = -1;
@@ -1544,7 +1542,7 @@ function gameLoop() {
         let choose = Math.round(Math.random() * 3);
         let alpha = Math.random() > 0.975;
         let superAlpha = alpha ? Math.random() > 0.975 : false;
-        let shapes = ["Square", "Triangle", "Pentagon", "Hexagon"]
+        let shapes = ["Pentagon", "Hexagon", "Heptagon", "Octagon"]
         let spawnPosition = [(Math.random() * room.width) - room.width / 2, (Math.random() * room.height) - room.height / 2];
         if (alpha) {
             spawnPosition = [util.getRandomFromRange(-room.width / 10, room.width / 10), util.getRandomFromRange(-room.height / 10, room.height / 10)];

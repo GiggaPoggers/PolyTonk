@@ -11,31 +11,31 @@ exports.entityTypes = [
     barrels: [],
   },
   {
-    name: "Nova",
+    name: "Portal",
     fieldFactor: 1,
-    bodyShape: 8,
+    bodyShape: 0,
     shell: {
       shape: 3,
       color: 8,
       spinning: true,
-      spinSpeed: 15,
-      size: 5,
-      shape: 6
+      spinSpeed: 10,
+      size: 1.7,
+      shape: 3
     },
     barrels: []
   },
   {
-    name: "Portal",
+    name: "Nova",
     bodyShape: 6,
     sizeFactor: 10,
     fieldFactor: 1.21,
     barrels: [],
   },
   {
-    name: "Square",
-    bodyShape: 5,
+    name: "Particle",
     fieldFactor: 1,
-    barrels: [],
+    bodyShape: 0,
+    barrels: []
   },
   {
     name: "Coin",
@@ -44,19 +44,25 @@ exports.entityTypes = [
     barrels: [],
   },
   {
-    name: "Triangle",
-    bodyShape: 6,
-    fieldFactor: 1,
-    barrels: [],
-  },
-  {
     name: "Pentagon",
-    bodyShape: 7,
+    bodyShape: 5,
     fieldFactor: 1,
     barrels: [],
   },
   {
     name: "Hexagon",
+    bodyShape: 6,
+    fieldFactor: 1,
+    barrels: [],
+  },
+  {
+    name: "Heptagon",
+    bodyShape: 7,
+    fieldFactor: 1,
+    barrels: [],
+  },
+  {
+    name: "Octagon",
     bodyShape: 8,
     fieldFactor: 1,
     barrels: [],
@@ -1543,14 +1549,14 @@ exports.entityTypes = [
         offset: 0,
         height: 1.8,
         width: 1.3,
-        recoil: 20,
+        recoil: 25,
         delay: 0,
         reload: 15,
         bullet: {
-          damageFactor: 5,
+          damageFactor: 3,
           rangeFactor: 1,
           penFactor: 15,
-          spdFactor: 1
+          spdFactor: .7
         },
       }
     ]

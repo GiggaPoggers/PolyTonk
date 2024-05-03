@@ -4,8 +4,10 @@
   "hostClient": true,
   "mapBorderSize": 350,
   "mapChangesToPlayerAmount": false,
+  "maxPortalsDependsOnMapSize": false,
   "maxShapesDependsOnMapSize": false,
   "maxShapes": 450,
+  "maxPortals": 100,
   "port": 8080,
   "tierConfig": {
     "tier1": 15,

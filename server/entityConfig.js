@@ -1392,6 +1392,48 @@ exports.entityTypes = [
     })(),
   },
   {
+    name: "Corrupted PolyBot 😈",
+    bodyShape: 5,
+    sizeFactor: 2.6,
+    spdFactor: 0.2,
+    shell: {
+      size: 1.3,
+      shape: 5,
+      spinning: true,
+      spinSpeed: -3,
+      color: 8
+    },
+    hltFacotr: 50,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.5,
+        width: 0.3,
+        recoil: 1,
+        delay: 0,
+        reload: 1,
+        trapezoidWidth: 0.7,
+        canShoot: false,
+      },
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.8,
+        width: 1.3,
+        recoil: 25,
+        delay: 0,
+        reload: 15,
+        bullet: {
+          damageFactor: 3,
+          rangeFactor: 1,
+          penFactor: 15,
+          spdFactor: .7
+        },
+      }
+    ]
+  },
+  {
     name: "Dominator",
     bodyShape: 8,
     sizeFactor: 2.2,
@@ -1516,48 +1558,6 @@ exports.entityTypes = [
           spdFactor: 1.05,
           sprFactor: 8,
         }
-      }
-    ]
-  },
-  {
-    name: "C̸̤̄̕ò̷̺͛͐r̷̨̻̞̀̃r̷̖͖͖̀u̴̲̓́̇p̴̟̉̐t̸̘̝͚̆̔͐e̵̝̓̂d̵̡͓̝̿̿ ̵̡̗̾P̶͇̽ǫ̸̥̬̓̔ḽ̶̰̻̿̀y̸̤̑B̵̻͆o̴̺͆t̷͙̹͚̐̇  😈",
-    bodyShape: 5,
-    sizeFactor: 2.6,
-    spdFactor: 0.2,
-    shell: {
-      size: 1.3,
-      shape: 5,
-      spinning: true,
-      spinSpeed: -3,
-      color: 8
-    },
-    hltFacotr: 50,
-    barrels: [
-      {
-        angle: 0,
-        offset: 0,
-        height: 1.5,
-        width: 0.3,
-        recoil: 1,
-        delay: 0,
-        reload: 1,
-        trapezoidWidth: 0.7,
-        canShoot: false,
-      },
-      {
-        angle: 0,
-        offset: 0,
-        height: 1.8,
-        width: 1.3,
-        recoil: 25,
-        delay: 0,
-        reload: 15,
-        bullet: {
-          damageFactor: 3,
-          rangeFactor: 1,
-          penFactor: 15,
-          spdFactor: .7
-        },
       }
     ]
   },

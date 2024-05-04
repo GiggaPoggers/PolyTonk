@@ -884,7 +884,7 @@ document.body.onkeyup = function(e) {
                   width: 1,
                   height: 1
               }, )) {
-              window.top.location = "http://cohort.surge.sh";
+              window.top.location = "https://iogames.space/";
           };
       };
       if (config.gameState == config.gameStates.menu && config.accountsEnabled) {
@@ -1678,8 +1678,8 @@ const loop = function() {
                 util.drawText(ctx, "PolyTonk Accounts Are Currently Disabled Due To Hosting Issues", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 25, "center");
             };
             // stats button, too lazy to finish.
-            //ctx.globalAlpha = 1;
-            /*ctx.strokeStyle = darkColors[8];
+            ctx.globalAlpha = 1;
+            ctx.strokeStyle = darkColors[8];
             let hovering = false;
             if (util.rectCollide({x: config.spacing * config.screenRatio, y: config.spacing * config.screenRatio, width: 150 * config.screenRatio, height: 40 * config.screenRatio}, {
                 x: config.mouse.x,
@@ -1703,7 +1703,7 @@ const loop = function() {
             });
             ctx.fill();
             ctx.fillStyle = colors[0];
-            util.drawText(ctx, "(NEW) Cohort.io", config.spacing + 75, config.spacing + 25, 15 + animations.cohortButton * 2, "center");*/
+            util.drawText(ctx, "iogames.space", config.spacing + 75, config.spacing + 25, 15 + animations.cohortButton * 2, "center");
             animations.servers = util.lerp(animations.servers, animations.rservers, 0.05);
             ctx.globalAlpha = config.guiAlpha * (-animations.menuSlide + 1);
             ctx.fillStyle = colors[3];

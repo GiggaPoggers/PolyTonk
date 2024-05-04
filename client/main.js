@@ -1703,7 +1703,7 @@ const loop = function() {
             });
             ctx.fill();
             ctx.fillStyle = colors[0];
-            util.drawText(ctx, "iogames.space", config.spacing + 75, config.spacing + 25, 15 + animations.cohortButton * 2, "center");
+            util.drawText(ctx, "iogames.space", config.spacing + 75, config.spacing + 25, 20 + animations.cohortButton * 2, "center");
             animations.servers = util.lerp(animations.servers, animations.rservers, 0.05);
             ctx.globalAlpha = config.guiAlpha * (-animations.menuSlide + 1);
             ctx.fillStyle = colors[3];

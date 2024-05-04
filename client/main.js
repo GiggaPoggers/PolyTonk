@@ -1561,11 +1561,11 @@ const loop = function() {
           ctx.fillRect(0, 0, config.screenWidth, config.screenHeight);
           ctx.globalAlpha = -animations.menuSlide + 1; // Draw Changelog
           ctx.fillStyle = colors[0];
-          util.drawText(ctx, "Changelog", config.screenWidth - config.spacing - 25, config.spacing + 10, 20, "right");
-          util.drawText(ctx, config.changelogTime == "" ? "Updated just now" : "Updated " + config.changelogTime + "ago", config.screenWidth - config.spacing - 25, config.spacing + 40, 18, "right");
+          util.drawText(ctx, "Changelog", config.screenWidth - config.spacing - 25, config.spacing + 10, 35, "right");
+          util.drawText(ctx, config.changelogTime == "" ? "Updated just now" : "Updated " + config.changelogTime + "ago", config.screenWidth - config.spacing - 25, config.spacing + 40, 30, "right");
           for (let i = 0; i < window.changelog.length; i++) {
               if (window.changelog[i] == "Added some aggressive bots") ctx.fillStyle = "#ff0000"
-              util.drawText(ctx, window.changelog[i] + " -", config.screenWidth - config.spacing - 25, config.spacing + 70 + (i * 30), 12.5, "right");
+              util.drawText(ctx, window.changelog[i] + " -", config.screenWidth - config.spacing - 25, config.spacing + 70 + (i * 30), 20, "right");
               ctx.fillStyle = colors[0];
           };
           // Home screen
@@ -1759,11 +1759,11 @@ const loop = function() {
       ctx.globalAlpha = animations.deathScreen;
       ctx.fillStyle = colors[2];
       //util.drawText(ctx, player.deathMessage, config.screenWidth / 2, config.screenHeight / 2 - 50 - 400 - -animations.deathScreen * 400, 10, "center");
-      util.drawText(ctx, "Died to a " + entityTypes[player.killerType].name, config.screenWidth / 2, config.screenHeight / 2 - 100 - 400 - -animations.deathScreen * 400, 10, "center");
+      util.drawText(ctx, "Died to a " + entityTypes[player.killerType].name, config.screenWidth / 2, config.screenHeight / 2 - 100 - 400 - -animations.deathScreen * 400, 25, "center");
       util.drawText(ctx, "Score: " + player.score, (config.screenWidth / 2) - 150, config.screenHeight / 2 - 50 - 400 - -animations.deathScreen * 400, 20, "left");
       util.drawText(ctx, "Level " + player.level + " " + player.tank.name, (config.screenWidth / 2) - 150, config.screenHeight / 2 - 400 - -animations.deathScreen * 400, 20, "left");
       util.drawText(ctx, "Kills: " + player.kills, (config.screenWidth / 2) - 150, config.screenHeight / 2 + 50 - 400 - -animations.deathScreen * 400, 20, "left");
-      util.drawText(ctx, "(Enter to respawn)", config.screenWidth / 2, config.screenHeight / 2 + 100 - 400 - -animations.deathScreen * 400, 10, "center");
+      util.drawText(ctx, "(Enter to respawn)", config.screenWidth / 2, config.screenHeight / 2 + 100 - 400 - -animations.deathScreen * 400, 20, "center");
       // offCanvas.deathIcon
       ctx.globalAlpha*=0.9
       ctx.drawImage(offCanvas.deathIcon.canvas, config.screenWidth / 2, config.screenHeight / 2 - 50 - 400 - -animations.deathScreen * 400)

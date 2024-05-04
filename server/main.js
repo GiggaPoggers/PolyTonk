@@ -1393,7 +1393,7 @@ function spawnPortal() {
 function spawnDominators() {
   if (room.bossCount < room.maxBossCount) {
     room.bossCount++;
-    let type = ["PolyBrute 😈", "PolyBlazar 😈", "C̸̤̄̕ò̷̺͛͐r̷̨̻̀̃r̷̖͖͖̀u̴̲̓́̇p̴̟̉̐t̸̘̝͚̆̔͐e̵̝̓̂d̵̡͓̝̿̿ ̵̡̗̾P̶͇̽ǫ̸̥̬̓̔ḽ̶̰̻̿̀y̸̤̑B̵̻͆o̴̺͆t̷͙̹͚̐̇  😈"];
+    let type = ["PolyBrute 😈", "PolyBlazar 😈", "Corrupted PolyBot 😈"];
     let spawnType = Math.floor(Math.random() * type.length);
     let bossName = type[spawnType];
     let boss = new Entity(Math.random() * room.width / 10, Math.random() * room.height / 10, bossName, idGenerator.generateId(), 50, "tank", null, true);
@@ -1418,7 +1418,7 @@ function spawnDominators() {
     boss.onDeath = function() {
       room.bossCount--;
       broadcastMessage(`The boss: "${bossName}" has been killed. The portal will respawn in 10 minutes.`);
-      setTimeout(spawnPortal, 600000); // Respawn the portal after 30 seconds
+      setTimeout(spawnPortal, 10000); // Respawn the portal after 30 seconds
 
       // Drop coins
       for (let i = 0; i < 10; i++) { // Change 10 to the desired number of coins to spawn

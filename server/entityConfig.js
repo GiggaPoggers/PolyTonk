@@ -184,7 +184,7 @@ exports.entityTypes = [
     ],
   },
   {
-    name: "Assassin",
+    name: "Ranger",
     bodyShape: 5,
     fieldFactor: 1.4,
     barrels: [
@@ -195,35 +195,12 @@ exports.entityTypes = [
         width: 0.9,
         recoil: 1,
         delay: 0,
-        reload: 1.4,
-        bullet: {
-          damageFactor: 1.2,
-          rangeFactor: 1.2,
-          penFactor: 1.2,
-          spdFactor: 1.75,
-          sprFactor: 0.3,
-        },
-      },
-    ],
-  },
-  {
-    name: "Ranger",
-    bodyShape: 5,
-    fieldFactor: 1.6,
-    barrels: [
-      {
-        angle: 0,
-        offset: 0,
-        height: 2.5,
-        width: 0.9,
-        recoil: 1,
-        delay: 0,
-        reload: 1.7,
+        reload: 2.5,
         bullet: {
           damageFactor: 1.3,
           rangeFactor: 1.3,
           penFactor: 1.5,
-          spdFactor: 2,
+          spdFactor: 1.5,
           sprFactor: 0.2,
         },
       },
@@ -234,6 +211,53 @@ exports.entityTypes = [
         height: 1.3,
         width: 0.9,
         trapezoidWidth: -0.3,
+      },
+    ],
+  },
+  {
+    name: "Vanguard",
+    bodyShape: 5,
+    fieldFactor: 1.5,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 3,
+        width: 1,
+        recoil: 1.5,
+        delay: 0,
+        canShoot: false,
+        reload: 5,
+      },
+      {
+        angle: 0,
+        offset: 0,
+        height: 2,
+        width: 1,
+        recoil: 5,
+        delay: 0,
+        reload: 2.2,
+        bullet: { damageFactor: 1, rangeFactor: 1.5, penFactor: 1, spdFactor: 1.8 },
+      },
+      {
+        angle: -10,
+        offset: .8,
+        height: 1.8,
+        width: 0.2,
+        recoil: 1,
+        delay: 0,
+        reload: 1,
+        bullet: { damageFactor: .5, rangeFactor: 0.8, penFactor: 1, spdFactor: 1.2 },
+      },
+      {
+        angle: 10,
+        offset: -.8,
+        height: 1.8,
+        width: 0.2,
+        recoil: 1,
+        delay: 0,
+        reload: 1,
+        bullet: { damageFactor: .5, rangeFactor: 0.8, penFactor: 1, spdFactor: 1.2 },
       },
     ],
   },
@@ -1427,7 +1451,7 @@ exports.entityTypes = [
         bullet: {
           damageFactor: 3,
           rangeFactor: 1,
-          penFactor: 15,
+          penFactor: 10,
           spdFactor: .7
         },
       }
@@ -1712,7 +1736,7 @@ exports.upgradeTree = {
     tier1: ["Twin", "Flank Guard", "Machine Gun", "Sniper"],
   },
   Sniper: {
-    tier2: ["Assassin"],
+    tier2: ["Ranger"],
   },
   "Flank Guard": {
     tier2: ["Tri-Angle", "Hybrid"],
@@ -1729,8 +1753,8 @@ exports.upgradeTree = {
   "Triple Shot": {
     tier3: ["Penta Shot"],
   },
-  Assassin: {
-    tier3: ["Ranger"],
+  Ranger: {
+    tier3: ["Vanguard"],
   },
 "Machine Gun": {
   tier2: ["Destroyer"],

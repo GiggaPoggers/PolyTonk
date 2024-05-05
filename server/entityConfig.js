@@ -195,7 +195,7 @@ exports.entityTypes = [
         width: 0.9,
         recoil: 1,
         delay: 0,
-        reload: 2.5,
+        reload: 2.2,
         bullet: {
           damageFactor: 1.3,
           rangeFactor: 1.3,

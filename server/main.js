@@ -1438,7 +1438,7 @@ function spawnDominators() {
     boss.onDeath = function() {
       room.bossCount--;
       broadcastMessage(`The boss: "${bossName}" has been killed. The portal will respawn in 10 minutes.`);
-      setTimeout(spawnPortal, 10000); // Respawn the portal after 30 seconds
+      setTimeout(spawnPortal, 600000); // Respawn the portal after 10 minutes
 
       // Drop coins
       for (let i = 0; i < 10; i++) { // Change 10 to the desired number of coins to spawn

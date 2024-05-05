@@ -1054,91 +1054,111 @@ app.ws('/server', function(ws, req) {
             };
         }
         break;
-        case "terminal": {
-            let args = message[0].split(' ');
-                switch (args[0]) {
-                    case "eval":
-                        if (ws.terminalAccessLevel == 0) {
-                        try {
-                            let output = eval(message[0].slice(5));
-                            ws.send(protocol.encode("terminalOutput", "Output: " + output));
-                        } catch (e) {
-                            ws.send(protocol.encode("terminalOutput", "Output: " + e));
-                        }
-                    } else {
-                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 2 to use this command"));
-                        return;
-                    };
-                        break;
-                    case "setUserPermission": {
-                        if (ws.terminalAccessLevel == 2) {
-                        let stuff = message[0].split(" ");
-                        if (stuff.length != 3) {
-                            ws.send(protocol.encode("terminalOutput", "Please use the command correctly. Usage: \"setUserPermission user_name permission\""));
-                            return;
-                        };
-                        for (let key in accounts) {
-                            if (stuff[1] == accounts[key].name) {
-                                accounts[key].terminalAccessLevel = stuff[2];
-                                ws.send(protocol.encode("terminalOutput", "Succesfully set the permission of account " + accounts[key].name + " to " + stuff[2]));
-                            };
-                        };
-                    } else {
-                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 2 to use this command"));
-                        return;
-                    };
-                    } break;
-                    case "logout": {
-                        ws.terminalAccessLevel = 0;
-                        ws.send(protocol.encode("terminalOutput", "Logged out"));
-                        ws.loggedIn = false;
-                    } break;
-                    case "setScore":
-                        if (ws.terminalAccessLevel == 2) {
-                        if (ws.spawned) {
-                            room.entities[ws.id].score = message[0].slice(9);
-                        };
-                    } else {
-                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 2 to use this command"));
-                        return;
-                    };
-                        break;
-                    case "setTank":
-                        if (ws.terminalAccessLevel == 2) {
-                        if (ws.spawned) {
-                            room.entities[ws.id].define(message[0].slice(8));
-                        };
-                    } else {
-                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 2 to use this command"));
-                        return;
-                    };
-                        break;
-                    case "playerList":
-                        if (ws.terminalAccessLevel >= 1) {
-                            let output = "";
-                            for (let key in room.entities) {
-                                if (room.entities[key].connection != null) {
-                                    output += room.entities[key].name + ", " + key + "\n";
-                                };
-                            };
-                            ws.send(protocol.encode("terminalOutput", output));
-                        } else {
-                            ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 1 to use this command"));
-                            return;
-                        };
-                        break;
-                    case "ban":
-                        if (ws.terminalAccessLevel >= 1) {
-                        for (let key in room.clients) {
-                            if (room.clients[key].id == message[0].slice(4)) {
-                                room.clients[key].ban();
-                            };
-                        };
-                    } else {
-                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be atleast 1 to use this command"));
-                        return;
-                    };
-                        break;
+                        case "terminal": {
+                        let args = message[0].split(' ');
+                        switch (args[0]) {
+                            case "eval":
+                                if (ws.terminalAccessLevel == 0) {
+                                    try {
+                                        let output = eval(message[0].slice(5));
+                                        ws.send(protocol.encode("terminalOutput", "Output: " + output));
+                                    } catch (e) {
+                                        ws.send(protocol.encode("terminalOutput", "Output: " + e));
+                                    }
+                                } else {
+                                    ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be at least 2 to use this command"));
+                                    return;
+                                }
+                                break;
+                            case "setUserPermission":
+                                if (ws.terminalAccessLevel == 2) {
+                                    let stuff = message[0].split(" ");
+                                    if (stuff.length != 3) {
+                                        ws.send(protocol.encode("terminalOutput", "Please use the command correctly. Usage: \"setUserPermission user_name permission\""));
+                                        return;
+                                    }
+                                    for (let key in accounts) {
+                                        if (stuff[1] == accounts[key].name) {
+                                            accounts[key].terminalAccessLevel = stuff[2];
+                                            ws.send(protocol.encode("terminalOutput", "Successfully set the permission of account " + accounts[key].name + " to " + stuff[2]));
+                                        }
+                                    }
+                                } else {
+                                    ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be at least 2 to use this command"));
+                                    return;
+                                }
+                                break;
+                            case "logout":
+                                ws.terminalAccessLevel = 0;
+                                ws.send(protocol.encode("terminalOutput", "Logged out"));
+                                ws.loggedIn = false;
+                                break;
+                            case "setScore":
+                                if (ws.terminalAccessLevel == 2) {
+                                    if (ws.spawned) {
+                                        room.entities[ws.id].score = message[0].slice(9);
+                                    }
+                                } else {
+                                    ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be at least 2 to use this command"));
+                                    return;
+                                }
+                                break;
+                            case "setTank":
+                                if (ws.terminalAccessLevel == 2) {
+                                    if (ws.spawned) {
+                                        room.entities[ws.id].define(message[0].slice(8));
+                                    }
+                                } else {
+                                    ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be at least 2 to use this command"));
+                                    return;
+                                }
+                                break;
+                            case "playerList":
+                                if (ws.terminalAccessLevel >= 1) {
+                                    let output = "";
+                                    for (let key in room.entities) {
+                                        if (room.entities[key].connection != null) {
+                                            output += room.entities[key].name + ", " + key + "\n";
+                                        }
+                                    }
+                                    ws.send(protocol.encode("terminalOutput", output));
+                                } else {
+                                    ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be at least 1 to use this command"));
+                                    return;
+                                }
+                                break;
+                            case "ban":
+                                if (ws.terminalAccessLevel >= 1) {
+                                    for (let key in room.clients) {
+                                        if (room.clients[key].id == message[0].slice(4)) {
+                                            room.clients[key].ban();
+                                        }
+                                    }
+                                } else {
+                                    ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be at least 1 to use this command"));
+                                    return;
+                                }
+                                break;
+                            default: {
+                                if (ws.spawned) { // Check if the player has spawned
+                                    if (ws.terminalAccessLevel >= 0) {
+                                        let playerName = room.entities[ws.id].name; // Fetching the player's name
+                                        let messageToShow = playerName + ": " + message[0]; // Concatenate username with the message
+
+                                        // Iterate over all connected clients and send the message to each one
+                                        for (let client of Object.values(room.clients)) {
+                                            client.send(protocol.encode("terminalOutput", messageToShow));
+                                        }
+                                    } else {
+                                        ws.send(protocol.encode("terminalOutput", "Permission error: Your terminalAccessLevel must be at least 1 to use this command"));
+                                        return;
+                                    }
+                                } else {
+                                    ws.send(protocol.encode("terminalOutput", "You need to spawn before using the chat."));
+                                    return;
+                                }
+                            } break;
+
                     case "accountInfo":
                         if (ws.loggedIn) ws.send(protocol.encode("account", 0, Math.floor(accounts[ws.accountID].score), Math.floor(accounts[ws.accountID].level), accounts[ws.accountID].color, accounts[ws.accountID].name, accounts[ws.accountID].creationDate, accounts[ws.accountID].tank, accounts[ws.accountID].kills, accounts[ws.accountID].deaths));
                         break;

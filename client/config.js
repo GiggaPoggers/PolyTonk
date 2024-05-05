@@ -17,9 +17,6 @@ window.servers = [{
 }, {
   wsLink: "wss://polytonkgrowth.onrender.com/server",
   name: "GROWTH",
-}, {
-  wsLink: "wss://polytonkgrowth2tdm.onrender.com/server",
-  name: "GROWTH 2TDM",
 }];
 // Year, Month, Full Date
 window.changelogDate = [1712796955062];

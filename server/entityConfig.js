@@ -1562,6 +1562,98 @@ exports.entityTypes = [
     ]
   },
   {
+    name: "Annihilator",
+    bodyShape: 5,
+    fieldFactor: 1,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.9,
+        width: 1.9,
+        recoil: 10,
+        delay: 0,
+        reload: 4,
+        bullet: {
+          damageFactor: 10,
+          rangeFactor: 2,
+          penFactor: 2,
+          spdFactor: 0.97,
+        },
+      },
+    ],
+  },
+  {
+    name: "Destroyer",
+    bodyShape: 5,
+    fieldFactor: 1,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.9,
+        width: 1.5,
+        recoil: 7.5,
+        delay: 0,
+        reload: 4,
+        bullet: {
+          damageFactor: 10,
+          rangeFactor: 2,
+          penFactor: 2,
+          spdFactor: 0.97,
+        },
+      },
+    ],
+  },
+  {
+    name: "Machine Gun",
+    bodyShape: 5,
+    fieldFactor: 1,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.8,
+        width: 0.9,
+        recoil: 0.5,
+        delay: 0,
+        reload: 0.5,
+        trapezoidWidth: 0.15,
+        bullet: {
+          damageFactor: 0.97,
+          rangeFactor: 1,
+          penFactor: 0.97,
+          spdFactor: 1.05,
+          sprFactor: 4,
+        },
+      },
+    ],
+  },
+  {
+    name: "Negev",
+    bodyShape: 5,
+    fieldFactor: 1,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.8,
+        width: 1.3,
+        recoil: 3,
+        delay: 0,
+        reload: 1.5,
+        trapezoidWidth: 0.15,
+        bullet: {
+          damageFactor: 0.97,
+          rangeFactor: 1.25,
+          penFactor: 0.97,
+          spdFactor: 1.05,
+          sprFactor: 2,
+        },
+      },
+    ],
+  },
+  {
     name: "Triplet",
     bodyShape: 5,
     fieldFactor: 1,
@@ -1617,7 +1709,7 @@ exports.entityTypes = [
 exports.stringEntityTypes = {};
 exports.upgradeTree = {
   Tank: {
-    tier1: ["Twin", "Flank Guard", "Sniper"],
+    tier1: ["Twin", "Flank Guard", "Machine Gun", "Sniper"],
   },
   Sniper: {
     tier2: ["Assassin"],
@@ -1640,6 +1732,13 @@ exports.upgradeTree = {
   Assassin: {
     tier3: ["Ranger"],
   },
+"Machine Gun": {
+  tier2: ["Destroyer"],
+  tier3: ["Negev"],
+},
+Destroyer: {
+  tier3: ["Annihilator"],
+},
 };
 exports.entityTypeMockups = [];
 // EntityTypes Helper

@@ -319,6 +319,7 @@
           terminalInput: document.getElementById("terminalInput"),
           terminalOutput: document.getElementById("terminalOutput"),
           terminalExit: document.getElementById("terminalExit"),
+          terminalOpen: document.getElementById("terminalOpen"),
           loginInput: document.getElementById("loginInput"),
           loginNameInput: document.getElementById("loginNameInput"),
           loginPassInput: document.getElementById("loginPassInput"),
@@ -622,12 +623,13 @@
               beingHovered = true;
               upgrade.size = util.lerp(upgrade.size, 1.1, 0.1);
           } else upgrade.size = util.lerp(upgrade.size, 1, 0.1);
+          
           ctx.lineWidth = 10;
           ctx.strokeStyle = colors[8];
           util.roundRect(ctx, x, y, 100, 100, config.guiCornerRadius);
           if (beingHovered) {
               ctx.fillStyle = lightGuiColors[color];
-          } else ctx.fillStyle = guiColors[color];
+          } else ctx.fillStyle = colors[color];
           ctx.stroke();
           ctx.fill();
           let bottomSpacing = 5
@@ -722,9 +724,6 @@
                         }
                         connect(window.servers[config.selectedServer].wsLink);
                     };
-                    break;
-                case 67:
-                    if (document.activeElement == document.body) elements.terminal.style.display = "block";
                     break;
                 case 75: //level up
                     ws.send(protocol.encode("levelUp"));
@@ -1172,24 +1171,18 @@
               config.screenWidth /= config.screenRatio;
               config.screenHeight /= config.screenRatio;
               if (!player.showingTank) {
-              // Draw score-level board
-              ctx.globalAlpha = config.guiAlpha;
-              ctx.fillStyle = colors[config.guiColor];
-              util.roundRect(ctx, config.spacing, config.screenHeight - 150 - config.spacing, 400, 150,5);
-              ctx.fill();
-              ctx.globalAlpha = 1;
-              ctx.font = "90px " + config.font;
-              ctx.fillStyle = colors[2];
-              util.drawText(ctx, "Score: " + player.score, config.spacing + 20, config.screenHeight - 120 - config.spacing, 20, "left");
-              util.drawText(ctx, "Level " + player.level, config.spacing + 20, config.screenHeight - 70 - config.spacing, 20, "left");
-              util.drawText(ctx, player.killsText, config.spacing + 20, config.screenHeight - 20 - config.spacing, 20, "left");
-              util.drawEntity(ctx, config.spacing + 370, config.screenHeight - 120 - config.spacing, {
-                  class: player.tank.id,
-                  showHealth: false,
-                  showName: false,
-                  color: 10,
-                  facing: -Math.PI / 4
-              }, undefined, 10, 1, false);
+                  // Draw score-level board
+                  ctx.globalAlpha = config.guiAlpha;
+                  ctx.fillStyle = colors[3];
+                  var boxHeight = elements.name.value == "" ? 30 : 30; // Adjusted height calculation
+                  util.roundRect(ctx, (config.screenWidth / 2) - 200, config.screenHeight - boxHeight - config.spacing, 400, boxHeight, 10);
+                  ctx.fill();
+                  ctx.globalAlpha = 1;
+                  ctx.font = "90px " + config.font;
+                  ctx.fillStyle = colors[2];
+                     util.drawText(ctx, "Level " + player.level + " " + player.tank.name, config.screenWidth / 2, config.screenHeight - 10 - config.spacing, 20, "center");
+
+
               // Draw killCount
               ctx.globalAlpha = config.guiAlpha;
               ctx.fillStyle = colors[3];
@@ -2152,8 +2145,9 @@
                         player.camera.rfov = message[2];
                         break;
                     case "terminalOutput":
-                        config.loginOutput = message[0];
-                        elements.terminalOutput.value += message[0] + "\n\n"
+                        elements.terminalOutput.value += message[0] + "\n\n";
+                        elements.terminalOutput.scrollTop = elements.terminalOutput.scrollHeight;
+                        elements.terminalOutput.style.overflow = 'hidden';
                         break;
                     case "account":
                         if (message[0]) { // If the account packet says we are in the account
@@ -2288,10 +2282,15 @@
                 };
             };
         };
-        if (!window.ask) connect(window.servers[config.selectedServer].wsLink);
-        elements.terminalExit.onclick = function() {
-            elements.terminal.style.display = "none";
-            canvas.focus();
-        };
-        elements.name.value = localStorage.getItem("name");
-    })();
+elements.terminalOpen.onclick = function() {
+    elements.terminal.style.display = "block";
+    elements.terminalOpen.style.display = "none";
+};
+elements.terminalExit.onclick = function() {
+    elements.terminal.style.display = "none";
+    elements.terminalOpen.style.display = "block";
+    canvas.focus();
+};
+if (!window.ask) connect(window.servers[config.selectedServer].wsLink);
+elements.name.value = localStorage.getItem("name");
+})();

@@ -623,13 +623,12 @@
               beingHovered = true;
               upgrade.size = util.lerp(upgrade.size, 1.1, 0.1);
           } else upgrade.size = util.lerp(upgrade.size, 1, 0.1);
-          
           ctx.lineWidth = 10;
           ctx.strokeStyle = colors[8];
           util.roundRect(ctx, x, y, 100, 100, config.guiCornerRadius);
           if (beingHovered) {
               ctx.fillStyle = lightGuiColors[color];
-          } else ctx.fillStyle = colors[color];
+          } else ctx.fillStyle = guiColors[color];
           ctx.stroke();
           ctx.fill();
           let bottomSpacing = 5
@@ -724,6 +723,9 @@
                         }
                         connect(window.servers[config.selectedServer].wsLink);
                     };
+                    break;
+                case 79:
+                    if (document.activeElement == document.body) elements.terminal.style.display = "block";
                     break;
                 case 75: //level up
                     ws.send(protocol.encode("levelUp"));

@@ -195,7 +195,7 @@ exports.entityTypes = [
         width: 0.9,
         recoil: 1,
         delay: 0,
-        reload: 2.2,
+        reload: 2.5,
         bullet: {
           damageFactor: 1.3,
           rangeFactor: 1.3,
@@ -1678,6 +1678,150 @@ exports.entityTypes = [
     ],
   },
   {
+  name: "Archer",
+  spdFactor: 1.2,
+  bodyShape: 6,
+  fieldFactor: 1.3,
+  barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 2,
+        width: 0.3,
+        recoil: .1,
+        delay: 0,
+        reload: 1.2,
+        bullet: {
+          damageFactor: 2,
+          rangeFactor: 1,
+          penFactor: 5,
+          spdFactor: .4,
+          sprFactor: 5,
+        },
+      },
+      {
+        canShoot: false,
+        angle: 0,
+        offset: 0,
+        height: 1.3,
+        width: 0.9,
+        trapezoidWidth: -0.3,
+      },
+    ],
+  },
+  {
+  name: "Crossbow",
+  spdFactor: 1.15,
+  bodyShape: 7,
+  fieldFactor: 1.3,
+  barrels: [
+      {
+        angle: 0,
+        offset: -0.3,
+        height: 2,
+        width: 0.3,
+        recoil: .1,
+        delay: 0,
+        reload: 1.1,
+        bullet: {
+          damageFactor: 1.2,
+          rangeFactor: 1,
+          penFactor: 5,
+          spdFactor: .4,
+          sprFactor: 5,
+        },
+      },
+      {
+        angle: 0,
+        offset: 0.3,
+        height: 2,
+        width: 0.3,
+        recoil: .1,
+        delay: 0,
+        reload: 1.1,
+        bullet: {
+          damageFactor: 1.2,
+          rangeFactor: 1,
+          penFactor: 5,
+          spdFactor: .4,
+          sprFactor: 4,
+        },
+      },
+      {
+        canShoot: false,
+        angle: 0,
+        offset: 0,
+        height: 1.3,
+        width: 0.9,
+        trapezoidWidth: -0.3,
+      },
+    ],
+  },
+  {
+  name: "Cannon",
+  spdFactor: 1.2,
+  bodyShape: 7,
+  fieldFactor: 1.35,
+  barrels: [
+      {
+        angle: 0,
+        offset: -0.3,
+        height: 2,
+        width: 0.3,
+        recoil: .1,
+        delay: 0,
+        reload: 1.1,
+        bullet: {
+          damageFactor: 1,
+          rangeFactor: 1,
+          penFactor: 5,
+          spdFactor: .4,
+          sprFactor: 5,
+        },
+      },
+      {
+        angle: 0,
+        offset: 0.3,
+        height: 2,
+        width: 0.3,
+        recoil: .1,
+        delay: 0,
+        reload: 1.1,
+        bullet: {
+          damageFactor: 1,
+          rangeFactor: 1,
+          penFactor: 5,
+          spdFactor: .4,
+          sprFactor: 4,
+        },
+      },
+      {
+        angle: 0,
+        offset: 0,
+        height: 2,
+        width: 0.5,
+        recoil: 2,
+        delay: 0,
+        reload: 1.5,
+        bullet: {
+          damageFactor: 3,
+          rangeFactor: 1.5,
+          penFactor: 5,
+          spdFactor: .5,
+          sprFactor: 3,
+        },
+      },
+      {
+        canShoot: false,
+        angle: 0,
+        offset: 0,
+        height: 1.3,
+        width: 0.9,
+        trapezoidWidth: -0.3,
+      },
+    ],
+  },
+  {
     name: "Triplet",
     bodyShape: 5,
     fieldFactor: 1,
@@ -1733,7 +1877,7 @@ exports.entityTypes = [
 exports.stringEntityTypes = {};
 exports.upgradeTree = {
   Tank: {
-    tier1: ["Twin", "Flank Guard", "Machine Gun", "Sniper"],
+    tier1: ["Twin", "Flank Guard", "Archer", "Machine Gun", "Sniper"],
   },
   Sniper: {
     tier2: ["Ranger"],
@@ -1762,6 +1906,12 @@ exports.upgradeTree = {
 },
 Destroyer: {
   tier3: ["Annihilator"],
+},
+Archer: {
+  tier2: ["Crossbow"],
+},
+Crossbow: {
+  tier3: ["Cannon"],
 },
 };
 exports.entityTypeMockups = [];

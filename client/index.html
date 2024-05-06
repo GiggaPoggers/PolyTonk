@@ -22,12 +22,6 @@
 
      gtag('config', 'G-NMQ02TBWBF');
    </script>
-   <script>
-   function scrollToBottom() {
-       var textarea = document.getElementById("terminalOutput");
-       textarea.scrollTop = textarea.scrollHeight;
-   }
-   </script>
  </head>
 <title>PolyTonk | V2.3</title>
 <a id="link"></a>
@@ -94,6 +88,22 @@
     height: 25px;
     opacity:0.8;
   }
+  .terminalButton2 {
+    border-radius: 5px;
+    cursor: pointer;
+    text-align:center;
+    position:fixed;
+    top:calc(100% - 25px - 10px);
+    left:calc(5px + .3% + .3%);
+    background:black;
+    color:white;
+    font-family: Odibee Sans;
+    border:none;
+    outline:none;
+    width: 80px;
+    height: 25px;
+    opacity:0.8;
+  }
   .terminalButton:hover {
     cursor: crosshair;
     background:grey;
@@ -106,10 +116,11 @@
   <input id="loginNameInput" class="loginInput" maxlength="10">  
   <input id="loginPassInput" type="password" class="loginInput" style="top:100px;" maxlength="10"> 
 </div>
-<div id="terminal" style="display:none;">
-  <textarea id="terminalOutput" readonly onchange="scrollToBottom()" style="position:fixed;top:calc(100% - 25px - 20px - 250px);left:10px;background:black;color:white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 250px;opacity:0.8; font-size: 20px;" placeholder="Messages will appear here""></textarea>
-  <input id="terminalInput" style="position:fixed;top:calc(100% - 25px - 10px);left:10px;background:black;color:white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 25px;opacity:0.8" placeholder="Type your message here...">
-  <button id="terminalExit" class="terminalButton" placeholder="Type your message here...">Exit</button>
+<button id="terminalOpen" class="terminalButton2" style="box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;">Open Chat</button>
+<div id="terminal" style="display: none;">
+  <textarea id="terminalOutput" readonly style="position:fixed;top:calc(100% - 25px - 20px - 250px);left: 1%;background:black;color: white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 250px;opacity:0.4; font-size: 20px; border-radius: 5px 5px 0px 0px; box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Messages will appear here""></textarea>
+  <input id="terminalInput" style="position:fixed;top:calc(100% - 25px - 10px);left: 1%;background:black;color:white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 25px;opacity:0.8; border-radius: 0px 0px 0px 5px; box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Type your message here...">
+<button id="terminalExit" class="terminalButton" style="border-radius: 0px 5px 5px 0px;box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Type your message here...">Hide</button>
 </div>
 <script type="module" src="./config.js"></script>
 <script type="module" src="./main.js"></script>

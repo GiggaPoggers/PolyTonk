@@ -7,7 +7,7 @@ window.servers = [{
       // Handle the error gracefully
       console.error("Error accessing window.top.location:", e);
       // Default to the fallback URL
-      return "wss://polytonk.onrender.com/server";
+      return "wss://polytonk.com/server";
     }
   })(),
   name: "FFA",

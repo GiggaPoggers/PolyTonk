@@ -885,7 +885,7 @@
                       width: 1,
                       height: 1
                   }, )) {
-                  window.top.location = "https://iogames.space/";
+                  window.top.location = "/partners";
               };
           };
           if (config.gameState == config.gameStates.menu && config.accountsEnabled) {
@@ -1176,13 +1176,13 @@
                   // Draw score-level board
                   ctx.globalAlpha = config.guiAlpha;
                   ctx.fillStyle = colors[3];
-                  var boxHeight = elements.name.value == "" ? 30 : 30; // Adjusted height calculation
+                  var boxHeight = elements.name.value == "" ? 40 : 40; // Adjusted height calculation
                   util.roundRect(ctx, (config.screenWidth / 2) - 200, config.screenHeight - boxHeight - config.spacing, 400, boxHeight, 10);
                   ctx.fill();
                   ctx.globalAlpha = 1;
                   ctx.font = "90px " + config.font;
                   ctx.fillStyle = colors[2];
-                     util.drawText(ctx, "Level " + player.level + " " + player.tank.name, config.screenWidth / 2, config.screenHeight - 10 - config.spacing, 20, "center");
+                     util.drawText(ctx, "Level " + player.level + " " + player.tank.name, config.screenWidth / 2, config.screenHeight - 10 - config.spacing, 30, "center");
 
 
               // Draw killCount
@@ -1686,19 +1686,19 @@
                     animations.cohortButton = util.lerp(animations.cohortButton, 1, 0.05);
                     hovering = true;
                 } else animations.cohortButton = util.lerp(animations.cohortButton, 0, 0.05);
-                ctx.fillStyle = hovering ? lightColors[18] : colors[18];
+                ctx.fillStyle = hovering ? lightColors[10] : colors[10];
                 util.roundRect(ctx, config.spacing, config.spacing, 150, 40, 10);
                 ctx.lineWidth = 10;
                 ctx.stroke();
                 ctx.fill();
-                ctx.fillStyle = hovering ? colors[18] : darkColors[18];
+                ctx.fillStyle = hovering ? colors[10] : darkColors[10];
                 util.roundRect(ctx, config.spacing, config.spacing + 20, 150, 20, {
                     bl: config.guiCornerRadius,
                     br: config.guiCornerRadius
                 });
                 ctx.fill();
                 ctx.fillStyle = colors[0];
-                util.drawText(ctx, "iogames.space", config.spacing + 75, config.spacing + 25, 20 + animations.cohortButton * 2, "center");
+                util.drawText(ctx, "Partners", config.spacing + 75, config.spacing + 30, 25 + animations.cohortButton * 2, "center");
                 animations.servers = util.lerp(animations.servers, animations.rservers, 0.05);
             //play button
             ctx.fillStyle = darkColors[9];
@@ -2151,6 +2151,7 @@
                         elements.terminalOutput.scrollTop = elements.terminalOutput.scrollHeight;
                         elements.terminalOutput.style.overflow = 'hidden';
                         break;
+                        
                     case "account":
                         if (message[0]) { // If the account packet says we are in the account
                             config.loggedIn = true;
@@ -2284,6 +2285,7 @@
                 };
             };
         };
+        
 elements.terminalOpen.onclick = function() {
     elements.terminal.style.display = "block";
     elements.terminalOpen.style.display = "none";

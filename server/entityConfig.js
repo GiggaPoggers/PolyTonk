@@ -12,13 +12,13 @@ exports.entityTypes = [
   },
   {
     name: "Portal",
-    fieldFactor: 1,
+    fieldFactor: 4,
     bodyShape: 0,
     shell: {
       shape: 3,
       color: 8,
       spinning: true,
-      spinSpeed: 10,
+      spinSpeed: 1.5,
       size: 1.7,
       shape: 3
     },
@@ -41,6 +41,20 @@ exports.entityTypes = [
     name: "Coin",
     bodyShape: 8,
     fieldFactor: 1,
+    barrels: [],
+  },
+  {
+    name: "Shrub",
+    bodyShape: 6,
+    sizeFactor: 10,
+    fieldFactor: 1.21,
+    shell: {
+      shape: 6,
+      spinning: true,
+      spinSpeed: .1,
+      color: 8,
+      size: 1.25,
+    },
     barrels: [],
   },
   {

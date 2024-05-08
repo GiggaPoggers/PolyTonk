@@ -23,4 +23,4 @@ window.servers = [{
 // Year, Month, Full Date
 window.changelogDate = [1714919256888];
 // SET CHANGELOG TO YOUR CURRENT DATE AFTER MAKING A CHANGE! TO GET YOUR DATE, PUT Date.now() ON YOUR CONSOLE
-window.changelog = ["Welcome to PolyTonk V2.3", "Player of the month: Incognitoes", "Added 8 new tanks (Machine Gun, Destroyer, Negev, Annihilator, Vanguard, Archer, Crossbow, and Cannon)", "Added a player chat system", "Removed game-modes temporaraly due to hosting issues.", "Currently working on adding/balancing tanks."];
+window.changelog = ["Welcome to PolyTonk V2.4", "Player of the month: Incognitoes", "Added 8 new tanks (Machine Gun, Destroyer, Negev, Annihilator, Vanguard, Archer, Crossbow, and Cannon)", "Added a player chat system", "Removed game-modes temporaraly due to hosting issues.", "Currently working on adding/balancing tanks."];

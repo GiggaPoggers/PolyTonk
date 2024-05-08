@@ -266,6 +266,7 @@
                   },
                   mobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
                   spawn: function() {
+                      document.getElementById("terminalOpen").style.display = "block";
                       if ((config.gameState == config.gameStates.menu || player.dead) && config.spawned == false) elements.name.disabled = true, config.spawned = true, ws.send(protocol.encode("spawn", elements.name.value)), localStorage.setItem("name", elements.name.value);
                   },
                   autoFire: false,
@@ -654,8 +655,8 @@
           "#000000" /* Real black */ ,
           "#f3f6fb" /* White */ ,
           "#2F2C30" /* Black */ ,
-          "#e7e7e7" /* Grid */ ,
-          "#bfbfbf" /* Dark grid */ ,
+          "#A6A6BE" /* Grid */ ,
+          "#768F5A" /* Dark grid */ ,
           "#ffffff" /* Blue */ ,
           "#a3a7b0" /* Home Screen */ ,
           "#525252" /* Border grey */ ,
@@ -2167,7 +2168,7 @@
                         entityTypes = JSON.parse(message[0])
                         config.entityTypesLoaded = true;
                         console.log("Loaded entityTypes.");
-                        if (config.language == "tr") {
+                        if (config.language == "en") {
                             for (let i = 0; i < entityTypes.length; i++) {
                                 entityTypes[i].name = ["Sniper","Assasin","Ranger","Flank Guard","Tri-Angle","Booster","Fighter","Twin","Tripple Shot","Penta Shot"][i] || entityTypes[i].name;
                             };
@@ -2282,7 +2283,6 @@
                 };
             };
         };
-        
 elements.terminalOpen.onclick = function() {
     elements.terminal.style.display = "block";
     elements.terminalOpen.style.display = "none";

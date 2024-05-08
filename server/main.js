@@ -1365,6 +1365,25 @@ for (let i = 0; i < 0; i++) {
     arenaCloser.godMode = true;
   }
 }
+// Define an array of broadcast messages
+const broadcastMessages = [
+  "Quick Tip: Kill the boss to instantly reach level 50!",
+  "Quick Tip: Destroy the portal found in the center of the map to start a bossfight!",
+  "Quick Tip: Shoot at the bosses bullets to cancel them out!",
+  "Quick Tip: Press the chat button at the bottom right to talk to other players!",
+  "Quick Tip: Hello GiggaPoggers!"
+];
+
+// Function to randomly select and broadcast a message
+function broadcastRandomMessage() {
+  let randomIndex = Math.floor(Math.random() * broadcastMessages.length);
+  let message = broadcastMessages[randomIndex];
+  broadcastMessage(message);
+}
+
+// Set interval to broadcast a random message every 5 minutes (300,000 milliseconds)
+setInterval(broadcastRandomMessage, 300000);
+
 // Code down for a fix
 // function spawnParticle(x, y, color) {
 //   setTimeout(() => {
@@ -1387,15 +1406,15 @@ let portalSpawned = false; // Flag to track if the portal has been spawned
 
 function spawnPortal() {
   if (!portalSpawned) {
-    let portal = new Entity(0, 0, "Destroy Portal To Start A Boss Fight", idGenerator.generateId(), 100, "portal", null, true);
+    let portal = new Entity(0, 0, "Destroy Portal To Start A Boss Fight", idGenerator.generateId(), 100, "food", null, true);
     portal.scoreLock = 0;
     portal.define("Portal");
-    portal.health = 1000;
-    portal.maxHealth = 1000; // Set maxHealth
+    portal.health = 5000;
+    portal.maxHealth = 5000; // Set maxHealth
     portal.value = 5000;
     portal.team = -1;
     portal.color = 17;
-    portal.type = "portal";
+    portal.type = "food";
 
     room.portals++; // Increment portal count
     portalSpawned = true; // Set flag to true

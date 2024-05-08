@@ -22,6 +22,6 @@
   "ipBanDatabaseEnabled" : false,
   "developerPowers": true,
   "publicCheatingLevel": 0,
-  "botAmount": 0,
+  "botAmount": 2,
   "maxDominators": 1
 }

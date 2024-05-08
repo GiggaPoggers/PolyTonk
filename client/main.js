@@ -724,9 +724,6 @@
                         connect(window.servers[config.selectedServer].wsLink);
                     };
                     break;
-                case 79:
-                    if (document.activeElement == document.body) elements.terminal.style.display = "block";
-                    break;
                 case 75: //level up
                     ws.send(protocol.encode("levelUp"));
                     break;
@@ -885,7 +882,7 @@
                       width: 1,
                       height: 1
                   }, )) {
-                  window.top.location = "/partners";
+                  window.top.location = "https://iogames.space/";
               };
           };
           if (config.gameState == config.gameStates.menu && config.accountsEnabled) {
@@ -1378,12 +1375,12 @@
                             config.messages.shift();
                         };
                     };
-                    util.roundRect(ctx, config.screenWidth / 2 - message.width / 2 - 10, config.spacing + i * 50, message.width + 20, 40, 10);
+                    util.roundRect(ctx, config.screenWidth / 2 - message.width / 2 - 10, config.spacing + i * 50, message.width + 20, 30, 10);
                     ctx.globalAlpha = config.guiAlpha;
                     ctx.fill();
                     ctx.globalAlpha = 1;
                     ctx.fillStyle = colors[0];
-                    util.drawText(ctx, message.content, config.screenWidth / 2, (config.spacing + i * 50) + 32, 32, "center", false);
+                    util.drawText(ctx, message.content, config.screenWidth / 2, (config.spacing + i * 50) + 23, 25, "center", false);
                 };
                 ctx.globalAlpha = 1;
               // Draw upgrades
@@ -1698,7 +1695,7 @@
                 });
                 ctx.fill();
                 ctx.fillStyle = colors[0];
-                util.drawText(ctx, "Partners", config.spacing + 75, config.spacing + 30, 25 + animations.cohortButton * 2, "center");
+                util.drawText(ctx, "iogames.space", config.spacing + 75, config.spacing + 30, 25 + animations.cohortButton * 2, "center");
                 animations.servers = util.lerp(animations.servers, animations.rservers, 0.05);
             //play button
             ctx.fillStyle = darkColors[9];

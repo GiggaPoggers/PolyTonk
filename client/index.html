@@ -89,6 +89,7 @@
     opacity:0.8;
   }
   .terminalButton2 {
+    display: none;
     border-radius: 5px;
     cursor: pointer;
     text-align:center;
@@ -111,18 +112,18 @@
   }
 </style>
 <canvas id="mainCanvas"></canvas>
-<input id="nameInput" style="display:none;" class="playerInput" maxlength="10" placeholder="Enter your username">
-<div id="loginInput" style="position:fixed;left:0;top:0;display:none;">
-  <input id="loginNameInput" class="loginInput" maxlength="10">  
-  <input id="loginPassInput" type="password" class="loginInput" style="top:100px;" maxlength="10"> 
-</div>
-<button id="terminalOpen" class="terminalButton2" style="box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;">Open Chat</button>
-<div id="terminal" style="display: none;">
-  <textarea id="terminalOutput" readonly style="position:fixed;top:calc(100% - 25px - 20px - 250px);left: 1%;background:black;color: white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 250px;opacity:0.4; font-size: 20px; border-radius: 5px 5px 0px 0px; box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Messages will appear here""></textarea>
-  <input id="terminalInput" style="position:fixed;top:calc(100% - 25px - 10px);left: 1%;background:black;color:white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 25px;opacity:0.8; border-radius: 0px 0px 0px 5px; box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Type your message here...">
-<button id="terminalExit" class="terminalButton" style="border-radius: 0px 5px 5px 0px;box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Type your message here...">Hide</button>
-</div>
-<script type="module" src="./config.js"></script>
-<script type="module" src="./main.js"></script>
-<script type="module" src="./protocol/spb.js"></script>
-<script type="module" src="./protocol/protocol.js"></script>
+  <input id="nameInput" style="display:none;" class="playerInput" maxlength="10" placeholder="Enter your username" autofocus="false">
+  <div id="loginInput" style="position:fixed;left:0;top:0;display:none;">
+    <input id="loginNameInput" class="loginInput" maxlength="10" autofocus="false">  
+    <input id="loginPassInput" type="password" class="loginInput" style="top:100px;" maxlength="10" autofocus="false"> 
+  </div>
+  <button id="terminalOpen" class="terminalButton2" style="box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;">Open Chat</button>
+  <div id="terminal" style="display: none;">
+    <textarea id="terminalOutput" readonly style="position:fixed;top:calc(100% - 25px - 20px - 250px);left: 1%;background:black;color: white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 250px;opacity:0.4; font-size: 20px; border-radius: 5px 5px 0px 0px; box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Messages will appear here""></textarea>
+    <input id="terminalInput" style="position:fixed;top:calc(100% - 25px - 10px);left: 1%;background:black;color:white;font-family: Odibee Sans;border:none;outline:none;width: 300px;height: 25px;opacity:0.8; border-radius: 0px 0px 0px 5px; box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Type your message here..." autofocus="false">
+  <button id="terminalExit" class="terminalButton" style="border-radius: 0px 5px 5px 0px;box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;" placeholder="Type your message here...">Hide</button>
+  </div>
+  <script type="module" src="./config.js"></script>
+  <script type="module" src="./main.js"></script>
+  <script type="module" src="./protocol/spb.js"></script>
+  <script type="module" src="./protocol/protocol.js"></script>

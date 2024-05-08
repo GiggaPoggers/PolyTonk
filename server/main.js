@@ -614,50 +614,53 @@ class Entity {
     onDeath() {
 
     };
-    loop() {
-        if (this.inVulnerable) {
-            if (!this.godMode) this.godMode = true;
-            if (this.shieldFlashTime < 0) {
-                this.shieldFlashTime = 5;
-                this.shieldFlash = this.shieldFlash == 0 ? 1 : 0;
-            } else this.shieldFlashTime--;
-            if (this.inVulnerableTime < Date.now()) {
-                this.inVulnerable = false;
-                this.godMode = false;
-            };
-        } else {
-            if (this.shieldFlash != 0) this.shieldFlash = 0;
-        };
-        if (this.godMode) {
-            if (this.maxHealth != this.health) this.health = this.maxHealth;
-        };
-        if (this.scoreLock != null) {
-            if (this.previousFrame.score != this.score) this.score = this.scoreLock;
-        };
-        if (this.hasSpawnAnimation) {
-            this.spawnAnimation--
-        };
-        if (this.hasAI) {
-            if (this.AISettings.orbitsAroundEnemy) {
-                this.orbitAngle += this.speed / 400;
-                //this.orbitAngle = this.orbitAngle % (Math.PI * 2);
-                //if (this.orbitAngle > Math.PI * 2) this.orbitAngle -= Math.PI * 2;
-            };
-            let entities = [];
-            for (let key in room.entities) {
-                if (key != this.id && (this.AISettings.ignoresOwnTeam ? room.entities[key].team != this.team : true) && (this.AISettings
-                        .attacksDefaultTeam ? true : room.entities[key].team != -1) && (this.AISettings.onlyAttacksTanks ? room.entities[key].type ==
-                        "tank" : true) && room.entities[key].type != "bullet") {
-                    entities.push({
-                        id: key,
-                        x: room.entities[key].x,
-                        y: room.entities[key].y,
-                        vx: room.entities[key].vx,
-                        vy: room.entities[key].vy,
-                        size: room.entities[key].size,
-                    });
-                };
-            };
+            loop() {
+                if (this.inVulnerable) {
+                    if (!this.godMode) this.godMode = true;
+                    if (this.shieldFlashTime < 0) {
+                        this.shieldFlashTime = 5;
+                        this.shieldFlash = this.shieldFlash == 0 ? 1 : 0;
+                    } else this.shieldFlashTime--;
+                    if (this.inVulnerableTime < Date.now()) {
+                        this.inVulnerable = false;
+                        this.godMode = false;
+                        this.inVulnerableTime = null; // Reset the invulnerability time
+                    }
+                } else {
+                    if (this.shieldFlash != 0) this.shieldFlash = 0;
+                }
+                if (this.godMode) {
+                    if (this.maxHealth != this.health) this.health = this.maxHealth;
+                }
+                if (this.scoreLock != null) {
+                    if (this.previousFrame.score != this.score) this.score = this.scoreLock;
+                }
+                if (this.hasSpawnAnimation) {
+                    this.spawnAnimation--;
+                }
+                if (this.hasAI) {
+                    if (this.AISettings.orbitsAroundEnemy) {
+                        this.orbitAngle += this.speed / 400;
+                        //this.orbitAngle = this.orbitAngle % (Math.PI * 2);
+                        //if (this.orbitAngle > Math.PI * 2) this.orbitAngle -= Math.PI * 2;
+                    }
+                    let entities = [];
+                    for (let key in room.entities) {
+                        if (key != this.id && (this.AISettings.ignoresOwnTeam ? room.entities[key].team != this.team : true) && (this.AISettings
+                                .attacksDefaultTeam ? true : room.entities[key].team != -1) && (this.AISettings.onlyAttacksTanks ? room.entities[key].type ==
+                                "tank" : true) && room.entities[key].type != "bullet") {
+                            entities.push({
+                                id: key,
+                                x: room.entities[key].x,
+                                y: room.entities[key].y,
+                                vx: room.entities[key].vx,
+                                vy: room.entities[key].vy,
+                                size: room.entities[key].size,
+                            });
+                        }
+                    }
+       
+
             let thisPos = {
                 x: this.x,
                 y: this.y

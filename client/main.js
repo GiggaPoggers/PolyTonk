@@ -333,7 +333,7 @@
           room.canvas.height = window.innerHeight * window.devicePixelRatio;
           config.screenWidth = canvas.width;
           config.screenHeight = canvas.height;
-          let ratio = Math.min(((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2, 1);
+          let ratio = Math.min(((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2, 2);
 
           config.screenRatio = ((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2;
           console.log(config.screenRatio)
@@ -655,23 +655,23 @@
           "#000000" /* Real black */ ,
           "#f3f6fb" /* White */ ,
           "#2F2C30" /* Black */ ,
-          "#A6A6BE" /* Grid */ ,
-          "#768F5A" /* Dark grid */ ,
+          "#DBDBDB" /* Grid */ ,
+          "#D4D4D4" /* Dark grid */ ,
           "#ffffff" /* Blue */ ,
-          "#a3a7b0" /* Home Screen */ ,
+          "#A7A7AF" /* Home Screen */ ,
           "#525252" /* Border grey */ ,
           "#d6605a" /* Red */ ,
           "#5e78d6" /* Orange */ ,
           "#89e894" /* Green */ ,
-          "#ffea61" /* Yellow */ ,
-          "#f7665f" /* Triangle red */ ,
-          "#9d8dd6" /* Pentagon blue */ ,
-          "#b6fba4" /* Light green */ ,
-          "#ff0000" /* Full red */ ,
-          "#1c1c1c" /* Dark grey */ ,
+          "#EFC74B" /* Yellow */ ,
+          "#E7896D" /* Triangle red */ ,
+          "#8D6ADF" /* Pentagon blue */ ,
+          "#7ADBBA" /* Light green */ ,
+          "#E13E41" /* Full red */ ,
+          "#484848" /* Dark grey */ ,
           "#aaaaff" /* PolyIonk.io blue */
       ];
-      let guiColors = [colors[6], colors[11], colors[9], colors[12], colors[14], "#966fd6", "#ff9cee", "#ffdfd3"];
+      let guiColors = [colors[3], colors[11], colors[9], colors[12], colors[14], "#966fd6", "#ff9cee", "#ffdfd3"];
       let darkColors = [];
       let lightColors = [];
       let lightGuiColors = [];
@@ -1670,7 +1670,7 @@
                     ctx.fillStyle = colors[0];
                     util.drawText(ctx, "PolyTonk Accounts Are Currently Disabled Due To Hosting Issues", config.screenWidth / 2, config.screenHeight - config.spacing - 12.5 - animations.menu * 30 + animations.menuSlide * 100, 25, "center");
                 };
-                // stats button, too lazy to finish.
+                // iogames.space button
                 ctx.globalAlpha = 1;
                 ctx.strokeStyle = darkColors[8];
                 let hovering = false;

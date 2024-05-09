@@ -404,7 +404,7 @@ class Entity {
         this.speed = 15;
         this.size = size;
         this.level = 1;
-        this.maxLevel = 50;
+        this.maxLevel = 70;
         this.fieldFactor = 1;
         this.score = 0;
         this.fov = 1;
@@ -1504,12 +1504,12 @@ for (let i = 0; i < baseCount; i++) {
         baseDrone.team = i;
         baseDrone.color = [10, 9, 11, 6][i];
         baseDrone.type = "bDrone";
-        baseDrone.godMode = false;
+        baseDrone.godMode = true;
         baseDrone.speed = 20;
         baseDrone.fov = 3;
         baseDrone.define("Drone");
-        baseDrone.showName = false;
-        baseDrone.showHealth = true;
+        baseDrone.showName = true;
+        baseDrone.showHealth = false;
         baseDrone.resetsOnDeath = true;
         baseDrone.damage *= .05;
         baseDrone.health = 10;

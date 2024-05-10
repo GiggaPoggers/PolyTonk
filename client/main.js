@@ -893,21 +893,9 @@
               };
           };
           if (player.skillPoints != 0) {
-            /* let x = config.screenWidth - 255 - config.spacing;
-                  let y = config.screenHeight / 2 - (player.skillLength * 30 + 10) / 2;
-                  util.roundRect(ctx, config.screenWidth - 255 - config.spacing, y, 255, player.skillLength * 30 + 10, config.guiCornerRadius);
-                  ctx.fill();
-                  ctx.fillStyle = colors[0];
-                  y += 255;
-                      let dx = config.mouse.x - (x - 20) * config.screenRatio;
-                      let dy = config.mouse.y - (y - i * 30 - 25) * config.screenRatio;
-                      let distance = Math.sqrt(dx * dx + dy * dy);*/
-              let x = config.screenWidth - 255 * config.screenRatio - config.spacing * config.screenRatio;
-              let y = config.screenHeight / 2 - (player.skillLength * 30 * config.screenRatio + 10 * config.screenRatio) / 2;
-              y += 255 * config.screenRatio;
-              for (let i = 0; i < player.skillLength; i++) {
-                  let dx = config.mouse.x - (x - 20 * config.screenRatio);
-                  let dy = config.mouse.y - (y - i * 30 * config.screenRatio - 25 * config.screenRatio);
+              for (let i = 0; i < player.skill.length; i++) {
+                  let dx = config.mouse.x - (config.spacing * config.screenRatio + 250 * config.screenRatio + 20 * config.screenRatio);
+                  let dy = config.mouse.y - (config.screenHeight - config.spacing * config.screenRatio - i * 30 * config.screenRatio - 25 * config.screenRatio);
                   let distance = Math.sqrt(dx * dx + dy * dy);
                   if (distance < 12.5 * config.screenRatio && player.skillPoints > 0) {
                       player.upgradeSkill(i);
@@ -1217,72 +1205,66 @@
                       ctx.fill();
                   };
                   ctx.fillStyle = colors[2];
-                  util.drawText(ctx, "Map: Name Not Decided", config.screenWidth - config.spacing, config.screenHeight - 210 - config.spacing, 25, "right");
+                  util.drawText(ctx, "PolyTonk", config.screenWidth - config.spacing, config.screenHeight - 210 - config.spacing, 25, "right");
 
-                // Draw skills
-                animations.skill = util.lerp(animations.skill, (config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.ingame) ? (animations.skillHover == 0 ? (player.skillPoints == 0 ? 0 : 1) : 1) : 0, 0.05);
-                animations.skillX = -(animations.skill - 2) * animations.skillXSize;
-                ctx.translate(-animations.skillXSize + animations.skillX, 0);
-                if (document.body.style.cursor != "default") document.body.style.cursor = "default";
-                if (true) {
-                    ctx.save();
-                    ctx.fillStyle = colors[config.guiColor];
-                    ctx.globalAlpha = config.guiAlpha;
-                    let x = config.screenWidth - 255 - config.spacing;
-                    let y = config.screenHeight / 2 - (player.skillLength * 30 + 10) / 2;
-                    util.roundRect(ctx, config.screenWidth - 255 - config.spacing, y, 255, player.skillLength * 30 + 10, config.guiCornerRadius);
-                    ctx.fill();
-                    ctx.fillStyle = colors[0];
-                    ctx.globalAlpha = 1;  
-                    if (player.skillPoints >= 2) util.drawText(ctx, "x" + player.skillPoints, x + 17.5 + 230, y - 10, 20, "right");              
-                    y += 255;
-                    for (let i = 0; i < player.skillLength; i++) {
-                        let skill = player.skill[i];
-                        ctx.fillStyle = colors[0];
-                        ctx.lineWidth = 12.5 * 2;
-                        ctx.strokeStyle = colors[0];
-                        ctx.globalAlpha = 0.1;
-                        // Draw bg
-                        ctx.beginPath();
-                        ctx.moveTo(x + 20, y - i * 30 - 25);
-                        ctx.lineTo(x + 20 + 215, y - i * 30 - 25);
-                        ctx.closePath();
-                        ctx.stroke();
-                        ctx.globalAlpha = 1;
-                        // Draw amount
-                        ctx.strokeStyle = guiColors[i];
-                        ctx.beginPath();
-                        ctx.moveTo(x + 20, y - i * 30 - 25);
-                        ctx.lineTo(x + 20 + (215 * (skill.count / skill.max)), y - i * 30 - 25);
-                        ctx.closePath();
-                        ctx.stroke();
-                        if (player.skillPoints == 0 && (!skill.count >= skill.max)) ctx.fillStyle = colors[7];
-                        if (skill.count >= skill.max) ctx.fillStyle = guiColors[i];
-                        util.drawText(ctx, skill.name, x + 17.5 + 215, y - i * 30 - 19, 20, "right");
-                        util.drawText(ctx, skill.count, x + 17.5, y - i * 30 - 19, 20, "left");
-                        ctx.fillStyle = colors[0];
-                        ctx.globalAlpha = config.guiAlpha;
-                        let dx = config.mouse.x - (x - 20) * config.screenRatio;
-                        let dy = config.mouse.y - (y - i * 30 - 25) * config.screenRatio;
-                        let distance = Math.sqrt(dx * dx + dy * dy);
-                        ctx.fillStyle = colors[3];
-                        if (distance < 12.5 * config.screenRatio && !(skill.count >= skill.max) && player.skillPoints != 0) {
-                            if (document.body.style.cursor != "pointer") document.body.style.cursor = "pointer";
-                            ctx.fillStyle = colors[17];
-                        };
-                        ctx.beginPath();
-                        ctx.arc(x - 20, y - i * 30 - 25, 12.5, 0, 2 * Math.PI);
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.globalAlpha = 1;
-                        ctx.fillStyle = colors[0];
-                        if (skill.count >= skill.max || player.skillPoints == 0) ctx.fillStyle = colors[7];
-                        util.drawText(ctx, "+", x - 20, y - i * 30 - 18, 20, "center");
-                        util.drawText(ctx, "[" + (-i + 8) + "]", x - 50, y - i * 30 - 18, 20, "center");
-                    };
-                    ctx.restore();
-                };
-                ctx.translate(-(-animations.skillXSize + animations.skillX), 0);
+                  // Draw skills
+                  animations.skill = util.lerp(animations.skill, (config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.ingame) ? (animations.skillHover == 0 ? (player.skillPoints == 0 ? 0 : 1) : 1) : 0, 0.05);
+                  animations.skillX = animations.skill * animations.skillXSize;
+                  ctx.translate(-animations.skillXSize + animations.skillX, 0);
+                  if (document.body.style.cursor != "default") document.body.style.cursor = "default";
+                  if (animations.skillX > 10) {
+                      ctx.fillStyle = colors[3];
+                      ctx.globalAlpha = config.guiAlpha;
+                      util.roundRect(ctx, config.spacing, config.screenHeight - config.spacing - (player.skill.length * 30) - 15, 255, player.skill.length * 30 + 10, config.guiCornerRadius);
+                      ctx.fill();
+                      ctx.fillStyle = colors[0];
+                      for (let i = 0; i < player.skill.length; i++) {
+                          let skill = player.skill[i];
+                          ctx.fillStyle = colors[0];
+                          ctx.lineWidth = 12.5 * 2;
+                          ctx.strokeStyle = colors[0];
+                          ctx.globalAlpha = 0.1;
+                          // Draw bg
+                          ctx.beginPath();
+                          ctx.moveTo(config.spacing + 20, config.screenHeight - config.spacing - i * 30 - 25);
+                          ctx.lineTo(config.spacing + 20 + 215, config.screenHeight - config.spacing - i * 30 - 25);
+                          ctx.closePath();
+                          ctx.stroke();
+                          ctx.globalAlpha = 1;
+                          // Draw amount
+                          ctx.strokeStyle = guiColors[i];
+                          ctx.beginPath();
+                          ctx.moveTo(config.spacing + 20, config.screenHeight - config.spacing - i * 30 - 25);
+                          ctx.lineTo(config.spacing + 20 + (215 * (skill.count / skill.max)), config.screenHeight - config.spacing - i * 30 - 25);
+                          ctx.closePath();
+                          ctx.stroke();
+                          if (player.skillPoints == 0 && (!skill.count >= skill.max)) ctx.fillStyle = colors[7];
+                          if (skill.count >= skill.max) ctx.fillStyle = guiColors[i];
+                          util.drawText(ctx, skill.name, config.spacing + 17.5, config.screenHeight - config.spacing - i * 30 - 19, 20, "left");
+                          util.drawText(ctx, skill.count, config.spacing + 250 - 10, config.screenHeight - config.spacing - i * 30 - 19, 20, "right");
+                          ctx.fillStyle = colors[0];
+                          ctx.globalAlpha = config.guiAlpha;
+                          let dx = config.mouse.x - (config.spacing + 250 + 20) * config.screenRatio;
+                          let dy = config.mouse.y - (config.screenHeight - config.spacing - i * 30 - 25) * config.screenRatio;
+                          let distance = Math.sqrt(dx * dx + dy * dy);
+                          ctx.fillStyle = colors[3];
+                          if (distance < 12.5 * config.screenRatio && !(skill.count >= skill.max) && player.skillPoints != 0) {
+                              if (document.body.style.cursor != "pointer") document.body.style.cursor = "pointer";
+                              ctx.fillStyle = colors[17];
+                          };
+                          ctx.beginPath();
+                          ctx.arc(config.spacing + 250 + 20, config.screenHeight - config.spacing - i * 30 - 25, 12.5, 0, 2 * Math.PI);
+                          ctx.closePath();
+                          ctx.fill();
+                          ctx.globalAlpha = 1;
+                          ctx.fillStyle = colors[0];
+                          if (skill.count >= skill.max || player.skillPoints == 0) ctx.fillStyle = colors[7];
+                          util.drawText(ctx, "+", config.spacing + 250 + 20, config.screenHeight - config.spacing - i * 30 - 18, 20, "center");
+                          util.drawText(ctx, "[" + (-i + 8) + "]", config.spacing + 250 + 50, config.screenHeight - config.spacing - i * 30 - 18, 20, "center");
+                      };
+                      if (player.skillPoints >= 2) util.drawText(ctx, "x" + player.skillPoints, config.spacing + 250 + 20, config.screenHeight - config.spacing - 8 * 30 - 18, 20, "center");
+                  };
+                  ctx.translate(-(-animations.skillXSize + animations.skillX), 0);
                 // Draw messages
                 for (let i = 0; i < config.messages.length; i++) {
                     ctx.fillStyle = colors[3];

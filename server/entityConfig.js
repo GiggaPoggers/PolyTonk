@@ -106,7 +106,7 @@ exports.entityTypes = [
         recoil: 1,
         delay: 0,
         reload: 1,
-        bullet: { damageFactor: 1, rangeFactor: 1, penFactor: 1, spdFactor: 1, type: "bDrone"},
+        bullet: { damageFactor: 1, rangeFactor: 1, penFactor: 1, spdFactor: 1},
       },
       {
         canShoot: false,
@@ -1550,9 +1550,9 @@ exports.entityTypes = [
   },
   {
     name: "Mega Sprayer",
-    bodyShape: 4,
-    sizeFactor: 2,
+    bodyShape: 6,
     hltFactor: 17,
+    spdFactor: 1.1,
     color: 3,
     barrels: [
       {
@@ -1562,13 +1562,13 @@ exports.entityTypes = [
         width: 0.45,
         recoil: 1,
         delay: 0,
-        reload: 1.2,
+        reload: .8,
         trapezoidWidth: -0.2,
         bullet: {
-          damageFactor: 1.7,
-          rangeFactor: 1.3,
-          penFactor: 1.4,
-          spdFactor: 1.3,
+          damageFactor: 2,
+          rangeFactor: 1,
+          penFactor: 1.5,
+          spdFactor: 1.2,
         }
       },
       {
@@ -1578,11 +1578,11 @@ exports.entityTypes = [
         width: 0.55,
         recoil: 0.45,
         delay: 0,
-        reload: 0.55,
+        reload: .8,
         trapezoidWidth: 0.2,
         bullet: {
           damageFactor: 1,
-          rangeFactor: 1,
+          rangeFactor: .5,
           penFactor: 0.8,
           spdFactor: 1.05,
           sprFactor: 4
@@ -1595,11 +1595,11 @@ exports.entityTypes = [
         width: 0.7,
         recoil: 0.45,
         delay: 0,
-        reload: 0.1,
+        reload: .3,
         trapezoidWidth: 0.4,
         bullet: {
           damageFactor: 0.4,
-          rangeFactor: 1,
+          rangeFactor: .5,
           penFactor: 0.6,
           spdFactor: 1.05,
           sprFactor: 8,
@@ -1622,6 +1622,28 @@ exports.entityTypes = [
         reload: 4,
         bullet: {
           damageFactor: 10,
+          rangeFactor: 2,
+          penFactor: 2,
+          spdFactor: 0.97,
+        },
+      },
+    ],
+  },
+  {
+    name: "Pounder",
+    bodyShape: 5,
+    fieldFactor: 1,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.9,
+        width: 1.4,
+        recoil: 5,
+        delay: 0,
+        reload: 3,
+        bullet: {
+          damageFactor: 4,
           rangeFactor: 2,
           penFactor: 2,
           spdFactor: 0.97,
@@ -1653,7 +1675,7 @@ exports.entityTypes = [
   },
   {
     name: "Machine Gun",
-    bodyShape: 5,
+    bodyShape: 6,
     fieldFactor: 1,
     barrels: [
       {
@@ -1676,6 +1698,46 @@ exports.entityTypes = [
     ],
   },
   {
+    name: "Sprayer",
+    bodyShape: 6,
+    fieldFactor: 1,
+    barrels: [
+      {
+        angle: 0,
+        offset: 0,
+        height: 2.2,
+        width: 0.9,
+        recoil: 0.55,
+        delay: 0,
+        reload: 0.825,
+        bullet: {
+          damageFactor: 0.97,
+          rangeFactor: 1,
+          penFactor: 0.97,
+          spdFactor: 1.05,
+          sprFactor: 2
+        }
+      },
+      {
+        angle: 0,
+        offset: 0,
+        height: 1.8,
+        width: 0.9,
+        recoil: 0.55,
+        delay: 0,
+        reload: 0.525,
+        trapezoidWidth: 0.15,
+        bullet: {
+          damageFactor: 0.97,
+          rangeFactor: 1,
+          penFactor: 0.97,
+          spdFactor: 1.05,
+          sprFactor: 4
+        }
+      }
+    ]
+  },
+  {
     name: "Negev",
     bodyShape: 5,
     fieldFactor: 1,
@@ -1696,150 +1758,6 @@ exports.entityTypes = [
           spdFactor: 1.05,
           sprFactor: 2,
         },
-      },
-    ],
-  },
-  {
-  name: "Archer",
-  spdFactor: 1.2,
-  bodyShape: 6,
-  fieldFactor: 1.3,
-  barrels: [
-      {
-        angle: 0,
-        offset: 0,
-        height: 2,
-        width: 0.3,
-        recoil: .1,
-        delay: 0,
-        reload: 1.2,
-        bullet: {
-          damageFactor: 2,
-          rangeFactor: 1,
-          penFactor: 5,
-          spdFactor: .4,
-          sprFactor: 5,
-        },
-      },
-      {
-        canShoot: false,
-        angle: 0,
-        offset: 0,
-        height: 1.3,
-        width: 0.9,
-        trapezoidWidth: -0.3,
-      },
-    ],
-  },
-  {
-  name: "Crossbow",
-  spdFactor: 1.15,
-  bodyShape: 7,
-  fieldFactor: 1.3,
-  barrels: [
-      {
-        angle: 0,
-        offset: -0.3,
-        height: 2,
-        width: 0.3,
-        recoil: .1,
-        delay: 1,
-        reload: 1.1,
-        bullet: {
-          damageFactor: 1.5,
-          rangeFactor: 1,
-          penFactor: 5,
-          spdFactor: .4,
-          sprFactor: 5,
-        },
-      },
-      {
-        angle: 0,
-        offset: 0.3,
-        height: 2,
-        width: 0.3,
-        recoil: .1,
-        delay: 0,
-        reload: 1.1,
-        bullet: {
-          damageFactor: 1.2,
-          rangeFactor: 1,
-          penFactor: 5,
-          spdFactor: .4,
-          sprFactor: 4,
-        },
-      },
-      {
-        canShoot: false,
-        angle: 0,
-        offset: 0,
-        height: 1.3,
-        width: 0.9,
-        trapezoidWidth: -0.3,
-      },
-    ],
-  },
-  {
-  name: "Cannon",
-  spdFactor: 1.2,
-  bodyShape: 7,
-  fieldFactor: 1.35,
-  barrels: [
-      {
-        angle: 0,
-        offset: -0.3,
-        height: 2,
-        width: 0.3,
-        recoil: .1,
-        delay: 0,
-        reload: 1.1,
-        bullet: {
-          damageFactor: 1,
-          rangeFactor: 1,
-          penFactor: 5,
-          spdFactor: .4,
-          sprFactor: 5,
-        },
-      },
-      {
-        angle: 0,
-        offset: 0.3,
-        height: 2,
-        width: 0.3,
-        recoil: .1,
-        delay: 1,
-        reload: 1.1,
-        bullet: {
-          damageFactor: 1,
-          rangeFactor: 1,
-          penFactor: 5,
-          spdFactor: .4,
-          sprFactor: 4,
-        },
-      },
-      {
-        angle: 0,
-        offset: 0,
-        height: 2,
-        width: 0.5,
-        recoil: 2,
-        delay: 0,
-        reload: 1.5,
-        bullet: {
-          damageFactor: 1.5,
-          rangeFactor: 1.5,
-          penFactor: 5,
-          spdFactor: .5,
-          sprFactor: 3,
-        },
-      },
-      {
-        canShoot: false,
-        angle: 0,
-        offset: 0,
-        height: 1.3,
-        width: 0.9,
-        trapezoidWidth: -0.3,
       },
     ],
   },
@@ -1899,7 +1817,7 @@ exports.entityTypes = [
 exports.stringEntityTypes = {};
 exports.upgradeTree = {
   Tank: {
-    tier1: ["Twin", "Flank Guard", "Archer", "Machine Gun", "Sniper"],
+    tier1: ["Twin", "Flank Guard", "Machine Gun", "Sniper", "Pounder"],
   },
   Sniper: {
     tier2: ["Ranger"],
@@ -1922,19 +1840,18 @@ exports.upgradeTree = {
   Ranger: {
     tier3: ["Vanguard"],
   },
-"Machine Gun": {
-  tier2: ["Destroyer"],
-  tier3: ["Negev"],
-},
-Destroyer: {
+ "Machine Gun": {
+  tier2: ["Sprayer"],
+  },
+  Sprayer: {
+    tier3: ["Mega Sprayer"],
+  },
+  "Pounder": {
+  tier2: ["Negev"],
+  },
+  Negev: {
   tier3: ["Annihilator"],
-},
-Archer: {
-  tier2: ["Crossbow"],
-},
-Crossbow: {
-  tier3: ["Cannon"],
-},
+  },
 };
 exports.entityTypeMockups = [];
 // EntityTypes Helper

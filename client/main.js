@@ -59,8 +59,8 @@
           })(),
           guiCornerRadius: 5,
           guiAlpha: 0.65,
-          leaderboardWidth: 300,
-          diepTheme: false,
+          leaderboardWidth: 275,
+          diepTheme: true,
           loginOutput: "",
           registerOrLogin: 0,
           loggedIn: false,
@@ -113,18 +113,18 @@
               return this.id++;
           }
       };
-      let Upgrade = class {
-          constructor(tank = 0, x = 0, color = 0, index = 0) {
-              this.tank = tank;
-              this.x = x;
-              this.color = color;
-              this.dying = false;
-              this.animation = 2;
-              this.size = 1;
-              this.index = index;
-              player.upgrades[player.upgradeIds.generateId()] = this;
-          };
-      };
+        let Upgrade = class {
+            constructor(tank = 0, x = 0, color = 0, index = 0) {
+                this.tank = tank;
+                this.x = x;
+                this.color = color;
+                this.dying = false;
+                this.animation = 0;
+                this.size = 1;
+                this.index = index;
+                player.upgrades[player.upgradeIds.generateId()] = this;
+            };
+        };
       let player = {
           reset: function() {
               player = {
@@ -650,28 +650,8 @@
           }, undefined, 20 * upgrade.size, 3 * upgrade.size, false);
           util.drawText(ctx, entityTypes[upgrade.tank].name, x + 50, y + 95, 14, "center");
       };
-      let colors = [
-          "#ffffff" /* Real white */ ,
-          "#000000" /* Real black */ ,
-          "#f3f6fb" /* White */ ,
-          "#2F2C30" /* Black */ ,
-          "#DBDBDB" /* Grid */ ,
-          "#D4D4D4" /* Dark grid */ ,
-          "#ffffff" /* Blue */ ,
-          "#A7A7AF" /* Home Screen */ ,
-          "#525252" /* Border grey */ ,
-          "#d6605a" /* Red */ ,
-          "#5e78d6" /* Orange */ ,
-          "#89e894" /* Green */ ,
-          "#EFC74B" /* Yellow */ ,
-          "#E7896D" /* Triangle red */ ,
-          "#8D6ADF" /* Pentagon blue */ ,
-          "#7ADBBA" /* Light green */ ,
-          "#E13E41" /* Full red */ ,
-          "#484848" /* Dark grey */ ,
-          "#aaaaff" /* PolyIonk.io blue */
-      ];
-      let guiColors = [colors[3], colors[11], colors[9], colors[12], colors[14], "#966fd6", "#ff9cee", "#ffdfd3"];
+        let colors = ["#ffffff" /* Real white */, "#000000" /* Real black */, "#f3f6fb" /* White */, "#2F2C30" /* Black */, "#e7e7e7" /* Grid */, "#bfbfbf" /* Dark grid */, "#72d3fe" /* Blue */, "#a3a7b0" /* Grey */, "#525252" /* Border grey */, "#ff6961" /* Red */, "#5e78d6" /* Tank Blue */, "#89e894" /* Green */, "#FFE869" /* Yellow */, "#FC7677" /* Triangle red */, "#768DFC" /* Pentagon blue */, "#b6fba4" /* Light green */, "#ff0000" /* Full red */, "#484848" /* Dark grey */];
+        let guiColors = [colors[6], colors[11], colors[9], colors[12], colors[14], "#966fd6", "#ff9cee", "#ffdfd3"];
       let darkColors = [];
       let lightColors = [];
       let lightGuiColors = [];
@@ -724,6 +704,10 @@
                         }
                         connect(window.servers[config.selectedServer].wsLink);
                     };
+                    break;
+                case 67:
+                    if (document.activeElement == document.body) elements.terminal.style.display = "block";
+                    elements.terminalOpen.style.display = "none";
                     break;
                 case 75: //level up
                     ws.send(protocol.encode("levelUp"));
@@ -931,19 +915,19 @@
                   };
               };
           };
+          // Check for upgrade button clicks
           for (let key in player.upgrades) {
               let upgrade = player.upgrades[key];
-              // util.drawUpgrade(upgrade, ((((config.screenWidth - animations.upgradeWidth - config.spacing) + 20) + (upgrade.x) * 120) * upgrade.animation) - (150 * (-upgrade.animation + 1)), (config.screenHeight - 180 - config.spacing) + 60, upgrade.color)
-              let x = ((((config.screenWidth - animations.upgradeWidth * config.screenRatio - config.spacing * config.screenRatio) + 20 * config.screenRatio) + (upgrade.x) * 120 * config.screenRatio) * upgrade.animation) - (150 * config.screenRatio * (-upgrade.animation + 1));
-              let y = (config.screenHeight - 180 * config.screenRatio - config.spacing * config.screenRatio) + 60 * config.screenRatio;
+              let x = (((config.spacing + 20) + (upgrade.x) * 120) * upgrade.animation) - (150 * (-upgrade.animation + 1));
+              let y = config.spacing + 60;
               if (util.rectCollide({
                       x: config.mouse.x,
                       y: config.mouse.y,
                       width: 1,
                       height: 1
                   }, {
-                      x: x,
-                      y: y,
+                      x: x * config.screenRatio,
+                      y: y * config.screenRatio,
                       width: 100 * config.screenRatio,
                       height: 100 * config.screenRatio
                   })) {
@@ -1011,39 +995,28 @@
               };
           };
       };
-    util.fullScreenCanvas(canvas);
-
-    window.b = function(a, b){
-        return Math.min(((a / Math.min(1080, b)) + (a / Math.min(1920, b))) / 2, 1);
-    }
-
-    let lastFrameTime = performance.now();
-    let avgfps = [];
-    const avgfpsLimit = 25;
-
-    const loop = function() {
-        if (!config.mouse.pressing && player.autoFire) config.mouse.pressing = true;
-
-        let delta = performance.now() - lastFrameTime;
-        let fps = Math.min(1000 / delta, 60);
-        lastFrameTime = performance.now();
-        avgfps.push(fps);
-
-        let total = 0;
-        for (let i = 0; i < avgfps.length; i++) {
-            total += avgfps[i];
-        }
-        let average = total / avgfps.length;
-        config.fps = average;
-
-        if (avgfps.length > avgfpsLimit) {
-            avgfps.shift();
-        }
-
-        // Existing code for the ratio calculation
-        player.camera.ratio = ((config.screenWidth + config.screenHeight) / 3000) / player.camera.fov;
-
-          //if (player.mobile) config.screenRatio *= 1.25;
+        util.fullScreenCanvas(canvas);
+        let lastFrameTime = performance.now();
+        let avgfps = [];
+        const avgfpsLimit = 25;
+        const loop = function () {
+            if (!config.mouse.pressing && player.autoFire) config.mouse.pressing = true;
+            let delta = performance.now() - lastFrameTime;
+            let fps = Math.min(1000 / delta, 60);
+            lastFrameTime = performance.now();
+            avgfps.push(fps);
+            let total = 0;
+            for (let i = 0; i < avgfps.length; i++) {
+                total += avgfps[i];
+            }
+            let average = total / avgfps.length;
+            config.fps = average;
+            if (avgfps.length > 25) {
+                avgfps.shift();
+            }
+            player.camera.ratio = ((config.screenWidth + config.screenHeight) / 3000) / player.camera.fov;
+            config.screenRatio = ((config.screenHeight / Math.max(1080, config.screenHeight)) + (config.screenWidth / Math.min(1920, config.screenWidth))) / 2;
+            if (player.mobile) config.screenRatio *= 1.25;
           ctx.resetTransform();
           if (config.gameState == config.gameStates.ingame || config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.menu || config.gameState == config.gameStates.goingToMenuFromDeath || config.gameState == config.gameStates.account) {
               if (player.showingTank) {
@@ -1193,110 +1166,58 @@
               ctx.fillStyle = colors[2];
               util.drawText(ctx, player.kills + " Kill" + (player.kills == 1 ? "" : "s"), (config.screenWidth) - 400 - config.spacing + 40, (config.spacing * animations.killsMenu) - (30 * (-animations.killsMenu + 1)) + 20, 18, "center");
 
-                // Draw minimap
-                ctx.globalAlpha = 0.75;
-                ctx.fillStyle = colors[4];
-                ctx.fillRect(config.screenWidth - 200 - config.spacing, config.spacing, 200, 200);
-                ctx.globalAlpha = 0.6;
-
-                // Function to convert number to letter
-                function getLetter(n) {
-                    return String.fromCharCode(65 + n);
-                }
-
-                // Calculate sector size
-                let sectorSize = 200 / 5;
-
-                // Draw sectors
-                for (let i = 0; i < 5; i++) {
-                    for (let j = 0; j < 5; j++) {
-                        // Calculate sector position
-                        let x = config.screenWidth - 200 - config.spacing + j * sectorSize;
-                        let y = config.spacing + i * sectorSize;
-
-                        // Calculate the center of the sector
-                        let centerX = x + sectorSize / 2;
-                        let centerY = y + sectorSize / 2;
-
-                        // Alternate between grey and light grey
-                        let fillStyle = (i + j) % 2 === 0 ? 'rgba(204, 204, 204, 0.5)' : 'rgba(238, 238, 238, 0.5)';
-
-                        // Draw sector with transparency
-                        ctx.fillStyle = fillStyle;
-                        ctx.fillRect(x, y, sectorSize, sectorSize);
-
-                        // Draw sector label at the center
-                        ctx.fillStyle = 'black'; // Change text color to black
-                        let sectorLabel = getLetter(i) + (j + 1);
-                        let textWidth = ctx.measureText(sectorLabel).width;
-                        let textX = centerX - textWidth / 2; // Adjust label position horizontally
-                        let textY = centerY + 5; // Adjust label position vertically
-                        ctx.fillText(sectorLabel, textX, textY);
-                    }
-                }
-
-
-                // Draw bases based on game mode
-                switch (room.gm) {
-                    case "2dom":
-                    case "2tdm": {
-                        let baseSize = 200 / 12;
-                        // draw orange base
-                        ctx.fillStyle = colors[10];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), 200 - (baseSize * 1.5) + config.spacing, baseSize, baseSize);
-                        // draw red base
-                        ctx.fillStyle = colors[9];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), (baseSize / 2) + config.spacing, baseSize, baseSize);
-                    }
-                    break;
-                    case "4tdm": {
-                        let baseSize = 200 / 12;
-                        // draw orange base
-                        ctx.fillStyle = colors[10];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), 200 - (baseSize * 1.5) + config.spacing, baseSize, baseSize);
-                        // draw red base
-                        ctx.fillStyle = colors[9];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), (baseSize / 2) + config.spacing, baseSize, baseSize);
-                        // draw green base
-                        ctx.fillStyle = colors[11];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), (baseSize / 2) + config.spacing, baseSize, baseSize);
-                        // draw blue base
-                        ctx.fillStyle = colors[6];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), 200 - (baseSize * 1.5) + config.spacing, baseSize, baseSize);
-                    }
-                    break;
-                    case "2dom": {
-                        let baseSize = 200 / 12;
-                        // left
-                        ctx.fillStyle = colors[room.dominationColors[0]];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 - (200 / 3 + baseSize / 2), 200 + config.spacing - 200 + 100 - baseSize / 2, baseSize, baseSize);
-                        // right
-                        ctx.fillStyle = colors[room.dominationColors[1]];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 + (200 / 3 - baseSize / 2), 200 + config.spacing - 200 + 100 - baseSize / 2, baseSize, baseSize);
-                        // down
-                        ctx.fillStyle = colors[room.dominationColors[2]];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 - baseSize / 2, 200 + config.spacing - 200 + 100 + (200 / 3 - baseSize / 2), baseSize, baseSize);
-                        // up
-                        ctx.fillStyle = colors[room.dominationColors[3]];
-                        ctx.fillRect(config.screenWidth - 200 - config.spacing + 100 - baseSize / 2, 200 + config.spacing - 200 + 100 - (200 / 3 + baseSize / 2), baseSize, baseSize);
-                    }
-                    break;
-                }
-
-                // Draw border around minimap
-                ctx.lineWidth = 5;
-                ctx.globalAlpha = 1;
-                ctx.strokeStyle = colors[8];
-                ctx.strokeRect(config.screenWidth - 200 - config.spacing, config.spacing, 200, 200);
-
-                // Draw player position
-                ctx.beginPath()
-                ctx.arc((config.screenWidth - 200 - config.spacing) + (player.position.x / (room.rwidth / 200)) + (room.rwidth / (room.rwidth / 100)), (config.spacing) + (player.position.y / (room.rheight / 200)) + (room.rheight / (room.rheight / 100)), 3, 0, 2 * Math.PI);
-                ctx.closePath()
-                ctx.fillStyle = colors[3];
-                ctx.fill();
-                ctx.fillStyle = colors[2];
-
+                  // Draw minimap
+                  ctx.globalAlpha = 0.75;
+                  ctx.fillStyle = colors[4];
+                  ctx.fillRect(config.screenWidth - 200 - config.spacing, config.screenHeight - 200 - config.spacing, 200, 200);
+                  ctx.globalAlpha = 0.25;
+                  switch (room.gm) {
+                      case "2tdm": {
+                          let baseSize = 200 / 12;
+                          // draw orange base
+                          ctx.fillStyle = colors[10];
+                          ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), config.screenHeight - baseSize - (baseSize / 2) - config.spacing, baseSize, baseSize);
+                          // draw red base
+                          ctx.fillStyle = colors[9];
+                          ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), config.screenHeight - 200 + (baseSize / 2) - config.spacing, baseSize, baseSize);
+                      }
+                          break;
+                      case "4tdm": {
+                          let baseSize = 200 / 12;
+                          // draw orange base
+                          ctx.fillStyle = colors[10];
+                          ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), config.screenHeight - baseSize - (baseSize / 2) - config.spacing, baseSize, baseSize);
+                          // draw red base
+                          ctx.fillStyle = colors[9];
+                          ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), config.screenHeight - 200 + (baseSize / 2) - config.spacing, baseSize, baseSize);
+                          // draw green base
+                          ctx.fillStyle = colors[11];
+                          ctx.fillRect(config.screenWidth - 200 - config.spacing + (baseSize / 2), config.screenHeight - 200 + (baseSize / 2) - config.spacing, baseSize, baseSize);
+                          // draw blue base
+                          ctx.fillStyle = colors[6];
+                          ctx.fillRect(config.screenWidth - 200 - config.spacing + 200 - baseSize - (baseSize / 2), config.screenHeight - baseSize - (baseSize / 2) - config.spacing, baseSize, baseSize);
+                      }
+                          break;
+                  };
+                  ctx.lineWidth = 5;
+                  ctx.globalAlpha = 1;
+                  ctx.strokeStyle = colors[8];
+                  ctx.strokeRect(config.screenWidth - 200 - config.spacing, config.screenHeight - 200 - config.spacing, 200, 200);
+                  ctx.beginPath()
+                  ctx.arc((config.screenWidth - 200 - config.spacing) + (player.position.x / (room.rwidth / 200)) + (room.rwidth / (room.rwidth / 100)), (config.screenHeight - 200 - config.spacing) + (player.position.y / (room.rheight / 200)) + (room.rheight / (room.rheight / 100)), 3, 0, 2 * Math.PI);
+                  ctx.closePath()
+                  ctx.fillStyle = colors[3];
+                  ctx.fill();
+                  for (let key in room.entities) {
+                      let entity = room.entities[key];
+                      ctx.beginPath()
+                      ctx.arc((config.screenWidth - 200 - config.spacing) + (entity.x / (room.rwidth / 200)) + (room.rwidth / (room.rwidth / 100)), (config.screenHeight - 200 - config.spacing) + (entity.y / (room.rheight / 200)) + (room.rheight / (room.rheight / 100)), entity.size / (room.rheight / (room.rheight / 100)), 0, 2 * Math.PI);
+                      ctx.closePath()
+                      ctx.fillStyle = colors[entity.color];
+                      ctx.fill();
+                  };
+                  ctx.fillStyle = colors[2];
+                  util.drawText(ctx, "Map: Name Not Decided", config.screenWidth - config.spacing, config.screenHeight - 210 - config.spacing, 25, "right");
 
                 // Draw skills
                 animations.skill = util.lerp(animations.skill, (config.gameState == config.gameStates.goingInGame || config.gameState == config.gameStates.ingame) ? (animations.skillHover == 0 ? (player.skillPoints == 0 ? 0 : 1) : 1) : 0, 0.05);
@@ -1384,79 +1305,76 @@
                     util.drawText(ctx, message.content, config.screenWidth / 2, (config.spacing + i * 50) + 23, 25, "center", false);
                 };
                 ctx.globalAlpha = 1;
-              // Draw upgrades
-              animations.tankSpin += 0.01;
-              if (player.upgradeCount == 0) {
-                  animations.upgrade = util.lerp(animations.upgrade, 0, 0.1);
-              } else animations.upgrade = util.lerp(animations.upgrade, 1, 0.1);
-              animations.upgradeWidth = util.lerp(animations.upgradeWidth, (player.upgradeCount * 120) + 20, 0.1);
-              //util.roundRect(ctx, config.spacing + ((animations.upgrade * 300) - 300), config.spacing, (animations.upgradeWidth), 100 + 40 + 40, config.guiCornerRadius);
-              util.roundRect(ctx, (config.screenWidth - animations.upgradeWidth - config.spacing) + ((-animations.upgrade * 300) + 300), config.screenHeight - 180 - config.spacing, (animations.upgradeWidth), 180, config.guiCornerRadius);
-              ctx.fillStyle = colors[config.guiColor];
-              ctx.globalAlpha = config.guiAlpha;
-              ctx.fill();
-              ctx.globalAlpha = 1;
-              ctx.fillStyle = colors[0];
-              util.drawText(ctx, "Upgrades", (config.screenWidth - config.spacing) + ((-animations.upgrade * 300) + 300) - 20, (config.screenHeight - 180 - config.spacing) + 35, 28, "right")
-              //if (document.body.style.cursor != "default") document.body.style.cursor = "default";
-              for (let key in player.upgrades) {
-                  let upgrade = player.upgrades[key];
-                  if (upgrade.dying) {
-                      upgrade.animation = util.lerp(upgrade.animation, 2, 0.1);
-                      if (upgrade.animation < 0.05) delete player.upgrades[key];
-                  } else upgrade.animation = util.lerp(upgrade.animation, 1, 0.1);
-                  // util.drawUpgrade(upgrade, (((config.spacing + 20) + (upgrade.x) * 120) * upgrade.animation) - (150 * (-upgrade.animation + 1)), config.spacing + 60, upgrade.color)
-                  util.drawUpgrade(upgrade, ((((config.screenWidth - animations.upgradeWidth - config.spacing) + 20) + (upgrade.x) * 120) * upgrade.animation) - (150 * (-upgrade.animation + 1)), (config.screenHeight - 180 - config.spacing) + 60, upgrade.color)
-              };
-                // draw leaderboard
-                animations.lbWidth = util.lerp(animations.lbWidth, 50 + (room.lbLength * 35), 0.1);
-                const leaderboardWidthWithTankImages = config.leaderboardWidth + config.spacing + 5 + 5; // Additional space for tank images
-                util.roundRect(ctx, config.spacing, config.spacing, leaderboardWidthWithTankImages, animations.lbWidth, config.guiCornerRadius);
-                ctx.fillStyle = colors[config.guiColor];
-                ctx.globalAlpha = config.guiAlpha;
-                ctx.fill();
-                ctx.globalAlpha = 1;
-                ctx.fillStyle = colors[0];
-                for (let i = 0; i < room.lbLength; i++) {
-                    let tank = room.lb[i];
-                    ctx.globalAlpha = 0.1;
-                    ctx.lineWidth = 30;
-                    ctx.strokeStyle = colors[0];
-                    ctx.lineJoin = "round";
-                    ctx.beginPath();
-                    ctx.moveTo((config.leaderboardWidth / 2) - 110 + config.spacing, 40 + i * 35 + config.spacing);
-                    ctx.lineTo((config.leaderboardWidth / 2) + 110 + config.spacing, 40 + i * 35 + config.spacing);
-                    ctx.closePath();
-                    ctx.stroke();
-                    ctx.globalAlpha = 0.9;
-                    // actually draw the thing
-                    ctx.strokeStyle = colors[tank.color];
-                    ctx.beginPath();
-                    ctx.moveTo((config.leaderboardWidth / 2) - 110 + config.spacing, 40 + i * 35 + config.spacing);
-                    ctx.lineTo((config.leaderboardWidth / 2) + (110 * (tank.percentage * 2 - 1)) + config.spacing, 40 + i * 35 + config.spacing);
-                    ctx.closePath();
-                    ctx.stroke();
-                    if (tank.percentage == 0) {
-                        ctx.fillStyle = ctx.strokeStyle;
-                        ctx.beginPath();
-                        ctx.arc((config.leaderboardWidth / 2) - 110 + config.spacing, 40 + i * 35 + config.spacing, 25 / 2, 0, 2 * Math.PI)
-                        ctx.closePath();
-                        ctx.fill();
-                        ctx.fillStyle = colors[0];
-                    };
-                    // Draw the tank image
-                    util.drawEntity(ctx, config.leaderboardWidth + config.spacing + 10, 40 + i * 35 + config.spacing, {
-                        class: tank.class,
-                        showHealth: false,
-                        showName: false,
-                        color: tank.color,
-                        facing: -Math.PI / 4
-                    }, undefined, 10, 1, false);
-
+                  // Draw upgrades
+                  animations.tankSpin += 0.01;
+                  if (player.upgradeCount == 0) {
+                      animations.upgrade = util.lerp(animations.upgrade, 0, 0.1);
+                  } else animations.upgrade = util.lerp(animations.upgrade, 1, 0.1);
+                  animations.upgradeWidth = util.lerp(animations.upgradeWidth, (player.upgradeCount * 120) + 20, 0.1);
+                  util.roundRect(ctx, config.spacing + ((animations.upgrade * 300) - 300), config.spacing, (animations.upgradeWidth), 100 + 40 + 40, config.guiCornerRadius);
+                  ctx.fillStyle = colors[3];
+                  ctx.globalAlpha = config.guiAlpha;
+                  ctx.fill();
                   ctx.globalAlpha = 1;
-                  util.drawText(ctx, tank.name + " - " + tank.score, (config.leaderboardWidth / 2) + config.spacing, 45 + i * 35 + config.spacing, 20)
-
-                };
+                  ctx.fillStyle = colors[0];
+                  util.drawText(ctx, "Upgrades", (config.spacing + animations.upgradeWidth / 2) + (((animations.upgrade * 300) - 300)), config.spacing + 32, 28, "center")
+                  //if (document.body.style.cursor != "default") document.body.style.cursor = "default";
+                  for (let key in player.upgrades) {
+                      let upgrade = player.upgrades[key];
+                      if (upgrade.dying) {
+                          upgrade.animation = util.lerp(upgrade.animation, 0, 0.1);
+                          if (upgrade.animation < 0.05) delete player.upgrades[key];
+                      } else upgrade.animation = util.lerp(upgrade.animation, 1, 0.1);
+                      util.drawUpgrade(upgrade, (((config.spacing + 20) + (upgrade.x) * 120) * upgrade.animation) - (150 * (-upgrade.animation + 1)), config.spacing + 60, upgrade.color)
+                  };
+                  // draw leaderboard
+                  animations.lbWidth = util.lerp(animations.lbWidth, 60 + (room.lb.length * 30), 0.1);
+                  util.roundRect(ctx, config.screenWidth - (config.leaderboardWidth) - config.spacing, config.spacing, config.leaderboardWidth, animations.lbWidth, config.guiCornerRadius);
+                  ctx.fillStyle = colors[3];
+                  ctx.globalAlpha = config.guiAlpha;
+                  ctx.fill();
+                  ctx.globalAlpha = 1;
+                  ctx.fillStyle = colors[0];
+                  util.drawText(ctx, "Leaderboard", config.screenWidth - (config.leaderboardWidth / 2) - config.spacing, 30 + config.spacing, 30)
+                  for (let i = 0; i < room.lb.length; i++) {
+                      let tank = room.lb[i];
+                      ctx.globalAlpha = 0.1;
+                      ctx.lineWidth = 25;
+                      ctx.strokeStyle = colors[0];
+                      ctx.lineJoin = "round";
+                      ctx.beginPath();
+                      ctx.moveTo(config.screenWidth - (config.leaderboardWidth / 2) - 110 - config.spacing, 60 + i * 30 + config.spacing);
+                      ctx.lineTo(config.screenWidth - (config.leaderboardWidth / 2) + 110 - config.spacing, 60 + i * 30 + config.spacing);
+                      ctx.closePath();
+                      ctx.stroke();
+                      ctx.globalAlpha = 0.9;
+                      // actually draw the thing
+                      ctx.strokeStyle = colors[tank.color];
+                      ctx.beginPath();
+                      ctx.moveTo(config.screenWidth - (config.leaderboardWidth / 2) - 110 - config.spacing, 60 + i * 30 + config.spacing);
+                      ctx.lineTo(config.screenWidth - (config.leaderboardWidth / 2) + (110 * (tank.percentage * 2 - 1)) - config.spacing, 60 + i * 30 + config.spacing);
+                      ctx.closePath();
+                      ctx.stroke();
+                      if (tank.percentage == 0) {
+                          ctx.fillStyle = ctx.strokeStyle;
+                          ctx.beginPath();
+                          ctx.arc(config.screenWidth - (config.leaderboardWidth / 2) - 110 - config.spacing, 60 + i * 30 + config.spacing, 25 / 2, 0, 2 * Math.PI)
+                          ctx.closePath();
+                          ctx.fill();
+                          ctx.fillStyle = colors[0];
+                      };
+                      ctx.globalAlpha = 1;
+                      ctx.globalAlpha = 1;
+                      util.drawText(ctx, tank.name + " - " + tank.score, config.screenWidth - (config.leaderboardWidth / 2) - config.spacing, 65 + i * 30 + config.spacing, 20)
+                      // draw the tank
+                      util.drawEntity(ctx, config.screenWidth - 310 - config.spacing, 60 + i * 30 + config.spacing, {
+                          class: tank.class,
+                          showHealth: false,
+                          showName: false,
+                          color: tank.color,
+                          facing: -Math.PI / 4
+                      }, undefined, 10, 1, false);
+                  };
               };
               if (player.showingTank) {
                   ctx.filter = "none";
@@ -2242,7 +2160,7 @@
                     case "upgradeReset":
                         player.upgradeReset();
                         break;
-                    case "upgrade":
+                        case "upgrade":
                         player.upgradeCount++;
                         let index = 0;
                         for (let key in player.upgrades) {

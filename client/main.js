@@ -57,10 +57,10 @@
                   dateString = (days == 0 ? "" : days + " day" + (days == 1 ? "" : "s") + " ") + (hours == 0 ? "" : hours + " hour" + (hours == 1 ? "" : "s") + " ") + (minutes == 0 ? "" : minutes + " minute" + (minutes == 1 ? "" : "s") + " ") // + (seconds == 0 ? "" : (minutes == 0 ? "" : " ") + seconds + " seconds");
               return dateString;
           })(),
-          guiCornerRadius: 5,
+          guiCornerRadius: 10,
           guiAlpha: 0.65,
           leaderboardWidth: 275,
-          diepTheme: true,
+          diepTheme: false,
           loginOutput: "",
           registerOrLogin: 0,
           loggedIn: false,
@@ -2064,13 +2064,13 @@
                             player.account.deaths = message[8];
                         };
                     break;
-                    case "entityTypes":
+                        case "entityTypes":
                         entityTypes = JSON.parse(message[0])
                         config.entityTypesLoaded = true;
                         console.log("Loaded entityTypes.");
-                        if (config.language == "en") {
+                        if (config.language == "tr") {
                             for (let i = 0; i < entityTypes.length; i++) {
-                                entityTypes[i].name = ["Sniper","Assasin","Ranger","Flank Guard","Tri-Angle","Booster","Fighter","Twin","Tripple Shot","Penta Shot"][i] || entityTypes[i].name;
+                                entityTypes[i].name = ["Bilinmeyen Sınıf", "Madeni Para", "Kare", "Üçgen", "Beşgen", "Altıgen", "Mermi", "Drone", "Tank", "Yan Muhafız", "Üçlü Atış", "Dörtlü Tank", "Keskin Nişancı", "İkiz", "Suikastçı", "Korucu", "Yok Edici", "Yok Edici", "Makineli Tüfek", "Negev", "Ana Gemi", "Üç Açılı ", "Dominator", "Arena Closer", "İsimsiz Sınıf", "İsimsiz Sınıf", "Minigun", "Smasher", "Mega Smasher"][i] || entityTypes[i].name;
                             };
                         };
                         break;
